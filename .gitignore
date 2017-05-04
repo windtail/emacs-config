@@ -1,0 +1,8 @@
+*~
+*.elc
+##*##
+*/
+!my/
+places
+recentf
+ido.*
