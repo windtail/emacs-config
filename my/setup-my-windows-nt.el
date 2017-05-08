@@ -14,12 +14,19 @@
 (setq gc-cons-percentage 0.5)
 (run-with-idle-timer 5 t #'garbage-collect)
 
+;; 避免打开多个实例，需要注册表支持
+(server-mode 1)
+
 ;; 字体设置
-(set-default-font (font-spec :family "Microsoft Yahei" :size 24))
-(set-fontset-font "fontset-default" 'gb18030' ("微软雅黑" . "unicode-bmp"))
+(set-default-font (font-spec :family "Consolas" :size 24))
+(set-fontset-font t 'gb18030 '("微软雅黑" . "unicode-bmp"))
 
 ;; 打开时最大化
 (w32-maximize-frame)
+
+;; 鼠标滚动放大缩小字体
+(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 
 (provide 'setup-my-windows-nt)
 

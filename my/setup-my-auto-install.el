@@ -1,8 +1,10 @@
 
 (require 'package)
 
+(defvar elpa-root (or (getenv "ELPA_OFFLINE_ROOT") "http://elpa.emacs-china.org/"))
+
 (defun elpa-mirror (name)
-  (cons name (concat "/home/ljj/Downloads/elpa/" name "/")))
+  (cons name (concat elpa-root name "/")))
 
 (setq package-archives (list (elpa-mirror "gnu")
                              (elpa-mirror "melpa")))
