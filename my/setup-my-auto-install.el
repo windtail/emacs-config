@@ -8,11 +8,10 @@
                              (elpa-mirror "melpa")))
 (package-initialize)
 
-;; automatic install needed packages
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
 (defun auto-install (packages)
+  "automatic install needed packages"
+  (when (not package-archive-contents)
+    (package-refresh-contents))
   (mapc #'(lambda (package)
     (unless (package-installed-p package)
       (package-install package)))

@@ -1,14 +1,31 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(yasnippet clean-aindent-mode smartparens))
-
-(add-hook 'prog-mode-hook 'clean-aindent-mode)
+(auto-install '(yasnippet hungry-delete clean-aindent-mode smartparens dtrt-indent ws-butler expand-region iedit))
 
 (require 'smartparens-config)
-(add-hook 'prog-mode-hook 'smartparens-mode)
 
-(add-hook 'prog-mode-hook 'yas-minor-mode)
+(smartparens-global-mode)
+(yas-global-mode 1)
+
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+(global-set-key (kbd "M-s e") 'iedit-mode)
+
+(global-set-key (kbd "RET") 'newline-and-indent)
+(global-set-key (kbd "<f7>") (lambda ()
+                               (interactive)
+                               (setq-default compilation-read-command nil)
+                               (call-interactively 'compile)))
+(defun my-on-prog-mode ()
+  (clean-aindent-mode 1)
+  (dtrt-indent-mode 1)
+  (setq dtrt-indent-verbosity 0)
+  (ws-butler-mode)
+  (hungry-delete-mode))
+
+(add-hook 'prog-mode-hook 'my-on-prog-mode)
 
 (provide 'setup-my-prog-common)
 

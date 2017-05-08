@@ -7,7 +7,7 @@
                 volatile-highlights
                 company
                 window-numbering
-                helm
+                projectile
                 swiper
                 counsel
                 magit))
@@ -23,7 +23,7 @@
 (window-numbering-mode t)
 
 (global-company-mode t)
-(setq-default company-idle-begin 0.1)
+(setq-default company-idle-delay 0.2)
 (setq-default company-minimum-prefix-length 2)
 
 (global-set-key (kbd "C-c w") 'whitespace-mode)
@@ -33,7 +33,8 @@
 ;; theme
 (load-theme 'material-light t)
 
-(require 'helm-config)
+;; 根目录创建一个 .projectile 文件即可被识别为工程根目录（另外，git根目录就自动会被识别）
+(projectile-mode 1)
 
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
