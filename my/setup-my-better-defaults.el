@@ -10,6 +10,7 @@
                 projectile
                 swiper
                 counsel
+                counsel-projectile
                 magit))
 
 (setq inhibit-startup-message t)
@@ -52,13 +53,11 @@
 (global-set-key (kbd "C-c k") 'counsel-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 
+(counsel-projectile-on)
+
 (workgroups-mode 1)
 (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
 (global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
-
-(global-set-key (kbd "s-x") 'clipboard-kill-region)
-(global-set-key (kbd "s-c") 'clipboard-kill-ring-save)
-(global-set-key (kbd "s-v") 'clipboard-yank)
 
 (volatile-highlights-mode t)
 
