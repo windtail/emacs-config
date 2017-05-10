@@ -6,7 +6,6 @@
 (require 'smartparens-config)
 
 (smartparens-global-mode)
-(yas-global-mode 1)
 
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
@@ -22,8 +21,7 @@
   (clean-aindent-mode 1)
   (dtrt-indent-mode 1)
   (setq dtrt-indent-verbosity 0)
-  (ws-butler-mode)
-  (hungry-delete-mode))
+  (ws-butler-mode))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 
