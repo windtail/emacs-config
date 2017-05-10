@@ -10,7 +10,7 @@
   (interactive)
   (dired (concat user-emacs-directory "my/")))
 
-(global-set-key (kbd "<f2> f") 'my-edit-init-file)
-(global-set-key (kbd "<f2> d") 'my-open-custom-dir)
+(global-set-key (kbd "<f2>") 'my-edit-init-file)
+(global-set-key (kbd "C-c C-f") 'find-file-at-point)
 
 (provide 'setup-my-hack-emacs)
