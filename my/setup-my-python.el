@@ -8,7 +8,9 @@
 
 (require 'setup-my-prog-common)
 
-(elpy-enable)
+(require 'elpy)
+(add-hook 'python-mode-hook #'elpy-enable)
+(add-hook 'python-mode-hook #'elpy-mode)
 (elpy-use-ipython)
 
 ;; use flycheck not flymake with elpy
@@ -19,6 +21,11 @@
 ;; enable autopep8 formatting on save
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+;; for pyvenv-workon
+(if (eq system-type 'windows-nt)
+  (setenv "WORKON_HOME" (getenv "USERPROFILE"))
+  (setenv "WORKON_HOME" (getenv "HOME")))
 
 ;; jupyter notebook integration
 (require 'ein)
