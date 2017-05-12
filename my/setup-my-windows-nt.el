@@ -18,7 +18,7 @@
 (server-mode 1)
 
 ;; 字体设置
-(set-default-font (font-spec :family "Consolas" :size 24))
+(set-frame-font (font-spec :family "Consolas" :size 24))
 (set-fontset-font t 'gb18030 '("微软雅黑" . "unicode-bmp"))
 
 ;; 打开时最大化
@@ -27,6 +27,10 @@
 ;; 鼠标滚动放大缩小字体
 (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
 (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
+
+(defun show-in-explorer ()
+  (interactive)
+   (w32-shell-execute "explore" (replace-regexp-in-string "/" "\\" default-directory t t)))
 
 (provide 'setup-my-windows-nt)
 

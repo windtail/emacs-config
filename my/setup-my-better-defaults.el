@@ -19,17 +19,27 @@
 (setq mode-require-final-newline t)
 (setq-default tab-width 4)
 (global-linum-mode t)
-(set-language-environment "utf-8")      ; default utf-8 encoding
+(setq column-number-mode t)
 (setq ibuffer-use-other-window t)
 (window-numbering-mode t)
 
+;; 使用本地编码，避免Windows上各种中文问题
+(set-locale-environment)
+
+;; 创建文件时总是用utf-8编码，更于Windows和Linux互通
+(defun my-set-new-file-to-utf-8 ()
+  (with-current-buffer (current-buffer)
+    (setq buffer-file-coding-system 'utf-8))
+  t)
+
+(add-to-list 'find-file-not-found-functions #'my-set-new-file-to-utf-8)
+
 (global-company-mode t)
-(setq-default company-idle-delay 0.2)
+(setq-default company-idle-delay 0)
 (setq-default company-minimum-prefix-length 2)
 
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "C-x g") 'magit-status)
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
 ;; theme
 (load-theme 'material-light t)
