@@ -1,7 +1,7 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(ycmd company-ycmd flycheck-ycmd))
+(auto-install '(counsel-gtags xcscope ycmd company-ycmd flycheck-ycmd))
 
 (require 'setup-my-prog-common)
 
@@ -23,19 +23,39 @@
     )  
   )
 
+(defun my-ycmd-enable ()
+  (interactive)
+  (my-ycmd-config)
+  (ycmd-mode)
+  (flycheck-mode)
+  )
+
 (defun my-on-c-mode ()
   (hs-minor-mode)  
   ;; gnu, k&r, bsd, whitesmith, stroustrup, ellemtel, linux, python, java, user
   (setq c-default-style "linux")
   (my-gdb-config)
-  (my-ycmd-config)
-  (ycmd-mode)
   (company-mode)
-  (flycheck-mode)
   (yas-minor-mode 1)
   )
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
 (add-hook 'c++-mode-hook 'my-on-c-mode)
+
+(cscope-setup)
+(add-hook 'c-mode-hook 'counsel-gtags-mode)
+(add-hook 'c++-mode-hook 'counsel-gtags-mode)
+
+(with-eval-after-load 'counsel-gtags
+  (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
+  (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
+  (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
+  (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
+  )
+
+(if (eq system-type 'windows-nt)
+    (setenv "GTAGSLIBPATH" "c:/MinGW/include")
+  (setenv "GTAGSLIBPATH" "/usr/include:/usr/local/include")
+  )
 
 (provide 'setup-my-c)
