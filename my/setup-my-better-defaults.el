@@ -35,7 +35,8 @@
 (add-to-list 'find-file-not-found-functions #'my-set-new-file-to-utf-8)
 
 (global-company-mode t)
-(setq-default company-idle-delay 0)
+(setq-default company-idle-delay 0.05)  ;; 0 will cause company-clang error on windows-nt
+(setq-default company-async-timeout 5)  ;; company-clang very slow on windows-nt
 (setq-default company-minimum-prefix-length 2)
 
 (global-set-key (kbd "C-c w") 'whitespace-mode)
@@ -65,7 +66,7 @@
 
 (counsel-projectile-on)
 
-(workgroups-mode 1)
+(require 'workgroups2)
 (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
 (global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
 

@@ -36,6 +36,7 @@
   (setq c-default-style "linux")
   (my-gdb-config)
   (company-mode)
+  (if (eq system-type 'windows-nt) (setq company-backends '(company-gtags company-dabbrev-code company-keywords)))
   (yas-minor-mode 1)
   )
 
@@ -51,11 +52,15 @@
   (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
+  (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-dwim)
   )
 
-(if (eq system-type 'windows-nt)
-    (setenv "GTAGSLIBPATH" "c:/MinGW/include")
-  (setenv "GTAGSLIBPATH" "/usr/include:/usr/local/include")
+
+(if (getenv "GTAGSLIBPATH") nil
+  (if (eq system-type 'windows-nt)
+      (setenv "GTAGSLIBPATH" "c:/msys64/mingw64/include;c:/msys64/mingw64/x86_64-w64-mingw32/include")
+    (setenv "GTAGSLIBPATH" "/usr/include:/usr/local/include")
+    )
   )
 
 (provide 'setup-my-c)
