@@ -49,6 +49,9 @@
 ;; 根目录创建一个 .projectile 文件即可被识别为工程根目录（另外，git根目录就自动会被识别）
 (projectile-mode 1)
 
+;; turn off ido mode, cancel operation in better-defaults
+(if (boundp ido-mode) (ido-mode -1))
+
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
