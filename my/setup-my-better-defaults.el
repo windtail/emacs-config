@@ -4,6 +4,7 @@
 (auto-install '(better-defaults
                 material-theme
                 workgroups2
+                which-key
                 volatile-highlights
                 company
                 window-numbering
@@ -71,5 +72,8 @@
 (global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
 
 (volatile-highlights-mode t)
+
+(require 'which-key)
+(which-key-mode)
 
 (provide 'setup-my-better-defaults)
