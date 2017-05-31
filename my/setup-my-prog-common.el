@@ -21,7 +21,8 @@
   (clean-aindent-mode 1)
   (dtrt-indent-mode 1)
   (setq dtrt-indent-verbosity 0)
-  (ws-butler-mode))
+  (ws-butler-mode)
+  (setq truncate-lines t))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 
