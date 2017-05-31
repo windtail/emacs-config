@@ -1,9 +1,17 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(counsel-gtags xcscope ycmd company-ycmd flycheck-ycmd))
+(auto-install '(counsel-gtags xcscope ycmd company-ycmd flycheck-ycmd company-c-headers))
 
 (require 'setup-my-prog-common)
+
+;; setup system include path if not set
+(if (getenv "GTAGSLIBPATH") nil
+  (if (eq system-type 'windows-nt)
+      (setenv "GTAGSLIBPATH" "c:/msys64/mingw64/include;c:/msys64/mingw64/x86_64-w64-mingw32/include")
+    (setenv "GTAGSLIBPATH" "/usr/include:/usr/local/include")
+    )
+  )
 
 (defun my-gdb-config ()
   (defvar gdb-many-windows t)
@@ -36,7 +44,11 @@
   (setq c-default-style "linux")
   (my-gdb-config)
   (company-mode)
-  (if (eq system-type 'windows-nt) (setq company-backends '(company-gtags company-dabbrev-code company-keywords)))
+  (setq company-backends '(company-c-headers company-gtags company-dabbrev-code company-keywords))
+  (setq company-c-headers-path-system
+        (split-string
+         (getenv "GTAGSLIBPATH")
+         (if (eq system-type 'windows-nt) ";" ":")))
   (yas-minor-mode 1)
   )
 
@@ -53,14 +65,6 @@
   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
   (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-dwim)
-  )
-
-
-(if (getenv "GTAGSLIBPATH") nil
-  (if (eq system-type 'windows-nt)
-      (setenv "GTAGSLIBPATH" "c:/msys64/mingw64/include;c:/msys64/mingw64/x86_64-w64-mingw32/include")
-    (setenv "GTAGSLIBPATH" "/usr/include:/usr/local/include")
-    )
   )
 
 (provide 'setup-my-c)
