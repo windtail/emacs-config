@@ -10,7 +10,7 @@
 
 (require 'setup-my-c)
 (require 'setup-my-python)
-(require 'setup-my-org)
+(require 'setup-my-text)
 
 ;; 放在最后面，以便在恢复时，所有之前的设置都已生效
 (workgroups-mode 1)

@@ -1,7 +1,7 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(org))
+(auto-install '(org markdown-mode markdown-mode+))
 
 (require 'org)
 (setq org-src-fontify-native t)
@@ -17,4 +17,4 @@
    (C . t)
    ))
 
-(provide 'setup-my-org)
+(provide 'setup-my-text)
