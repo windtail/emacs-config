@@ -50,7 +50,10 @@
 (projectile-mode 1)
 
 ;; turn off ido mode, cancel operation in better-defaults
-(if (boundp ido-mode) (ido-mode -1))
+(add-hook 'after-init-hook
+          '(lambda ()
+             (ido-mode -1))
+          )
 
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
