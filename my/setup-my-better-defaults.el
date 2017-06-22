@@ -73,9 +73,9 @@
 
 (counsel-projectile-on)
 
-(require 'workgroups2)
-(global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
-(global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
+;; (require 'workgroups2)
+;; (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
+;; (global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
 
 (volatile-highlights-mode t)
 
