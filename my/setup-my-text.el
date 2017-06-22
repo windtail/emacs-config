@@ -17,4 +17,11 @@
    (C . t)
    ))
 
+;; 3 runs to get ref correct (pdflatext => xelatex)
+(setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"
+                              "xelatex -interaction nonstopmode -output-directory %o %f"
+                              "xelatex -interaction nonstopmode -output-directory %o %f"))
+
+(add-hook 'org-mode-hook 'yas-minor-mode)
+
 (provide 'setup-my-text)

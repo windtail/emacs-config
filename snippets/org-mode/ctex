@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: Org LaTeX export header for Chinese
+# key: ctex
+# --
+
+#+LaTeX_HEADER: \usepackage{xeCJK}
+#+LaTeX_HEADER: \setCJKmainfont[BoldFont={${1:WenQuanYi Zen Hei}}]{${2:AR PL SungtiL GB}}
+#+LaTeX_HEADER: \usepackage{geometry}
+#+LaTeX_HEADER: \geometry{left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm}
+#+LaTeX_HEADER: \usepackage{indentfirst}
+$0

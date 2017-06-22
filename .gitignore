@@ -1,9 +1,13 @@
 *~
 *.elc
 ##*##
-*/
-!my/
+elpa/
+backups/
+auto-save-list/
+eshell/
+semanticdb/
 places
 recentf
 ido.*
 projectile-bookmarks.eld
+/tramp
