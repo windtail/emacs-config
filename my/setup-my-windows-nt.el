@@ -15,6 +15,8 @@
 (run-with-idle-timer 5 t #'garbage-collect)
 
 ;; 避免打开多个实例，需要注册表支持
+;; Linux中应在需要时直接运行 server-start 命令，一般是在term中打开某个文件
+;; 如果使用eshell，则可以直接运行emacs命令 find-file
 (server-mode 1)
 
 ;; 字体设置
