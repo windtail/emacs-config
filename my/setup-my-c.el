@@ -16,7 +16,7 @@
 (defun my-gdb-config ()
   (defvar gdb-many-windows t)
   (defvar gdb-show-main t)
-  (define-key c-mode-map (kbd "<f5>") 'gdb))
+  (define-key c-mode-map (kbd "<f5>") 'realgud:gdb))
 
 (defun my-ycmd-config ()
   (let ((ycmd-root (file-truename "~/ycmd")))

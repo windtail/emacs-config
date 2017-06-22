@@ -1,7 +1,9 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(yasnippet hungry-delete clean-aindent-mode smartparens dtrt-indent ws-butler expand-region iedit))
+(auto-install '(yasnippet hungry-delete clean-aindent-mode smartparens
+                          dtrt-indent ws-butler expand-region iedit
+                          realgud))
 
 (require 'smartparens-config)
 
