@@ -3,7 +3,7 @@
 
 (auto-install '(yasnippet hungry-delete clean-aindent-mode smartparens
                           dtrt-indent ws-butler expand-region iedit
-                          realgud))
+                          realgud jinja2-mode))
 
 (require 'smartparens-config)
 
