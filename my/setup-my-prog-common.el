@@ -24,7 +24,8 @@
   (dtrt-indent-mode 1)
   (setq dtrt-indent-verbosity 0)
   (ws-butler-mode)
-  (setq truncate-lines t))
+  (setq truncate-lines t)
+  (yas-minor-mode 1))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 

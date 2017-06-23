@@ -49,7 +49,6 @@
         (split-string
          (getenv "GTAGSLIBPATH")
          (if (eq system-type 'windows-nt) ";" ":")))
-  (yas-minor-mode 1)
   )
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
