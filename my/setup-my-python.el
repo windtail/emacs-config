@@ -22,6 +22,9 @@
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
+(require 'realgud)
+(setq-default realgud:pdb-command-name "python -m pdb")
+
 ;; for pyvenv-workon
 (if (eq system-type 'windows-nt)
   (setenv "WORKON_HOME" (getenv "USERPROFILE"))

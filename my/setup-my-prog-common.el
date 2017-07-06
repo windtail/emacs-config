@@ -25,7 +25,8 @@
   (setq dtrt-indent-verbosity 0)
   (ws-butler-mode)
   (setq truncate-lines t)
-  (yas-minor-mode 1))
+  (yas-minor-mode 1)
+  (require 'realgud))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 
