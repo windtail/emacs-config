@@ -1,7 +1,7 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(counsel-gtags xcscope ycmd company-ycmd flycheck-ycmd company-c-headers))
+(auto-install '(counsel-gtags xcscope company-c-headers))
 
 (require 'setup-my-prog-common)
 
@@ -17,26 +17,6 @@
   (defvar gdb-many-windows t)
   (defvar gdb-show-main t)
   (define-key c-mode-map (kbd "<f5>") 'realgud:gdb))
-
-(defun my-ycmd-config ()
-  (let ((ycmd-root (file-truename "~/ycmd")))
-    (if (getenv "YCMD_ROOT") (setq ycmd-root (getenv "YCMD_ROOT")))
-    (require 'ycmd)
-    (set-variable 'ycmd-server-command (list "python" "-u" (f-join ycmd-root "ycmd")))
-    (set-variable 'ycmd-global-config (f-join ycmd-root "examples" ".ycm_extra_conf.py"))
-    (require 'company-ycmd)
-    (company-ycmd-setup)
-    (require 'flycheck-ycmd)
-    (flycheck-ycmd-setup)
-    )  
-  )
-
-(defun my-ycmd-enable ()
-  (interactive)
-  (my-ycmd-config)
-  (ycmd-mode)
-  (flycheck-mode)
-  )
 
 (defun my-on-c-mode ()
   (hs-minor-mode)  
