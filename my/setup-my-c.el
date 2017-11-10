@@ -16,13 +16,13 @@
 (defun my-gdb-config ()
   (defvar gdb-many-windows t)
   (defvar gdb-show-main t)
+  (require 'realgud)
   (define-key c-mode-map (kbd "<f5>") 'realgud:gdb))
 
 (defun my-on-c-mode ()
   (hs-minor-mode)  
   ;; gnu, k&r, bsd, whitesmith, stroustrup, ellemtel, linux, python, java, user
   (setq c-default-style "linux")
-  (my-gdb-config)
   (company-mode)
   (setq company-backends '(company-c-headers company-gtags company-dabbrev-code company-keywords))
   (setq company-c-headers-path-system
