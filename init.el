@@ -10,5 +10,6 @@
 
 (require 'setup-my-c)
 (require 'setup-my-python)
+(require 'setup-my-lua)
 (require 'setup-my-text)
 (require 'setup-my-misc)
