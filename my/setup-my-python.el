@@ -11,7 +11,6 @@
 (require 'elpy)
 (add-hook 'python-mode-hook #'elpy-enable)
 (add-hook 'python-mode-hook #'elpy-mode)
-(elpy-use-ipython)
 
 ;; use flycheck not flymake with elpy
 (when (require 'flycheck nil t)
