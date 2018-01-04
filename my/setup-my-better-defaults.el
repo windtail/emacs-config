@@ -71,8 +71,6 @@
 (global-set-key (kbd "C-c k") 'counsel-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 
-(counsel-projectile-on)
-
 ;; (require 'workgroups2)
 ;; (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
 ;; (global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
