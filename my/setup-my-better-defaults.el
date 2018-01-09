@@ -15,6 +15,9 @@
                 magit))
 
 (setq inhibit-startup-message t)
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+; (scroll-bar-mode 0)
 (global-auto-revert-mode)
 (global-hl-line-mode)
 (setq mode-require-final-newline t)
