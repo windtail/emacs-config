@@ -25,9 +25,4 @@
   (require 'realgud)
   (setq-default realgud:pdb-command-name "python -m pdb"))
 
-;; for pyvenv-workon
-(if (eq system-type 'windows-nt)
-  (setenv "WORKON_HOME" (getenv "USERPROFILE"))
-  (setenv "WORKON_HOME" (getenv "HOME")))
-
 (provide 'setup-my-python)
