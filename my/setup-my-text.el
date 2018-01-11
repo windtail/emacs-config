@@ -24,14 +24,37 @@
 
 (add-hook 'org-mode-hook 'yas-minor-mode)
 
-(if (eq system-type 'windows-nt)
-    (setq rst-normal-font "SimSun" rst-bold-font "SimHei")
-  (setq rst-normal-font "AR PL UMing CN" rst-bold-font "文泉驿正黑"))
+(defun my-pandoc-setup-pdf ()
+  (if (find-font (font-spec :family="宋体"))
+	  (setq pandoc-rst-cjk-main-font "宋体")
+	(setq pandoc-rst-cjk-main-font "AR PL UMing CN"))
 
-(defun my-pandoc-rst2pdf ()
-  "convert rst to pdf using pandoc(xelatex)"
-  (interactive)
-  (compile (format "pandoc -t latex --latex-engine=xelatex -s -VCJKoptions=BoldFont=\"%s\" -VCJKmainfont=\"%s\" -o %s.pdf %s"
-                   rst-bold-font rst-normal-font (file-name-base (buffer-name)) (buffer-name))))
+  (if (find-font (font-spec :family="黑体"))
+	  (setq pandoc-rst-cjk-main-bold-font "黑体")
+	(setq pandoc-rst-cjk-main-bold-font "文泉驿正黑"))
+
+  (defun my-rst2pdf ()
+	"convert reST to pdf using pandoc(xelatex)"
+	(interactive)
+	(set (make-local-variable 'compile-command)
+		 (format "pandoc -t latex --latex-engine=xelatex -s -VCJKoptions=BoldFont=\"%s\" -VCJKmainfont=\"%s\" -o %s.pdf %s"
+				 pandoc-rst-cjk-main-bold-font pandoc-rst-cjk-main-font
+				 (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
+				 (file-name-nondirectory (buffer-file-name))))
+	(call-interactively 'compile))
+
+  (defun my-rst2docx ()
+	"convert reST to docx using pandoc"
+	(interactive)
+	(set (make-local-variable 'compile-command)
+		 (format "pandoc -t docx -s -o %s.docx %s"
+				 (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
+				 (file-name-nondirectory (buffer-file-name))))
+	(call-interactively 'compile))
+
+  (define-key rst-mode-map (kbd "<f5> p") 'my-rst2pdf)
+  (define-key rst-mode-map (kbd "<f5> d") 'my-rst2docx))
+
+(add-hook 'rst-mode-hook 'my-pandoc-setup-pdf)
 
 (provide 'setup-my-text)
