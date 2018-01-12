@@ -34,7 +34,7 @@
 	  (setq pandoc-rst-cjk-main-bold-font "黑体")
 	(setq pandoc-rst-cjk-main-bold-font "文泉驿正黑"))
 
-  (defun my-rst2pdf ()
+  (defun my-pandoc-rst2pdf ()
 	"convert reST to pdf using pandoc(xelatex)"
 	(interactive)
 	(set (make-local-variable 'compile-command)
@@ -44,7 +44,7 @@
 				 (file-name-nondirectory (buffer-file-name))))
 	(call-interactively 'compile))
 
-  (defun my-rst2docx ()
+  (defun my-pandoc-rst2docx ()
 	"convert reST to docx using pandoc"
 	(interactive)
 	(set (make-local-variable 'compile-command)
@@ -53,10 +53,23 @@
 				 (file-name-nondirectory (buffer-file-name))))
 	(call-interactively 'compile))
 
-  (define-key rst-mode-map (kbd "<f5> p") 'my-rst2pdf)
-  (define-key rst-mode-map (kbd "<f5> d") 'my-rst2docx))
+  (define-key rst-mode-map (kbd "<f5> p") 'my-pandoc-rst2pdf)
+  (define-key rst-mode-map (kbd "<f5> d") 'my-pandoc-rst2docx))
+
+(defun my-setup-rst2pdf ()
+  (defun my-rst2pdf ()
+	"convert reST to pdf using rst2pdf + custom config and style"
+	(interactive)
+	(set (make-local-variable 'compile-command)
+		 (format "rst2pdf --config ~/.emacs.d/rst2pdf/config -o %s.pdf %s"
+				 (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
+				 (file-name-nondirectory (buffer-file-name))))
+	(call-interactively 'compile))
+
+  (define-key rst-mode-map (kbd "<f5> f") 'my-rst2pdf))
 
 (add-hook 'rst-mode-hook 'my-pandoc-setup-pdf)
+(add-hook 'rst-mode-hook 'my-setup-rst2pdf)
 (add-hook 'rst-mode-hook (lambda () (require 'table)))
 
 (provide 'setup-my-text)

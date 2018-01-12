@@ -1,0 +1,15 @@
+{
+  "embeddedFonts": [
+    [
+      "simfang.ttf",
+      "simhei.ttf",
+      "simkai.ttf",
+      "simsun.ttc"
+    ]
+  ],
+  "fontsAlias": {
+    "stdFont": "simfang",
+    "stdBold": "simhei",
+    "stdItalic": "simkai"
+  }
+}
