@@ -2,6 +2,7 @@
 (require 'setup-my-auto-install)
 
 (auto-install '(org markdown-mode markdown-mode+))
+(auto-download-contrib "https://sourceforge.net/projects/table/files/latest/download?source=files" "table.el.gz")
 
 (require 'org)
 (setq org-src-fontify-native t)
@@ -56,5 +57,6 @@
   (define-key rst-mode-map (kbd "<f5> d") 'my-rst2docx))
 
 (add-hook 'rst-mode-hook 'my-pandoc-setup-pdf)
+(add-hook 'rst-mode-hook (lambda () (require 'table)))
 
 (provide 'setup-my-text)
