@@ -10,6 +10,16 @@
   "fontsAlias": {
     "stdFont": "simfang",
     "stdBold": "simhei",
-    "stdItalic": "simkai"
-  }
+    "stdItalic": "simkai",
+    "stdBoldItalic": "simsun",
+    "stdMono": "simkai"
+  },
+  "styles": [
+    [
+      "normal",
+      {
+        "fontSize": 14
+      }
+    ]
+  ]
 }
