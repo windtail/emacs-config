@@ -1,5 +1,6 @@
 
 (add-to-list 'load-path "~/.emacs.d/my/")
+(add-to-list 'load-path "~/.emacs.d/contrib/")
 
 (require 'setup-my-better-defaults)
 
@@ -7,7 +8,6 @@
 
 (when (eq system-type 'windows-nt)
   (require 'setup-my-windows-nt))
-(add-to-list 'load-path "~/.emacs.d/contrib/")
 
 (require 'setup-my-c)
 (require 'setup-my-python)
