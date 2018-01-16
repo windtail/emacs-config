@@ -2,6 +2,8 @@
 (require 'setup-my-auto-install)
 
 (auto-install '(counsel-gtags xcscope company-c-headers))
+(auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/makefile-mode-ext.el" "makefile-mode-ext.el")
+(auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/kconfig-mode.el" "kconfig-mode.el")
 
 (require 'setup-my-prog-common)
 
@@ -12,6 +14,9 @@
     (setenv "GTAGSLIBPATH" "/usr/include:/usr/local/include")
     )
   )
+
+(load "kconfig-mode")
+(load "makefile-mode-ext")
 
 (defun my-gdb-config ()
   (defvar gdb-many-windows t)
@@ -28,8 +33,7 @@
   (setq company-c-headers-path-system
         (split-string
          (getenv "GTAGSLIBPATH")
-         (if (eq system-type 'windows-nt) ";" ":")))
-  )
+         (if (eq system-type 'windows-nt) ";" ":"))))
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
 (add-hook 'c++-mode-hook 'my-on-c-mode)
