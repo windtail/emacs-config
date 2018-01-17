@@ -8,12 +8,17 @@
 (require 'setup-my-prog-common)
 
 ;; setup system include path if not set
-(if (getenv "GTAGSLIBPATH") nil
-  (if (eq system-type 'windows-nt)
-      (setenv "GTAGSLIBPATH" "c:/msys64/mingw64/include;c:/msys64/mingw64/x86_64-w64-mingw32/include")
-    (setenv "GTAGSLIBPATH" "/usr/include:/usr/local/include")
-    )
-  )
+(setq my-cc-include-dirs
+      (if (getenv "CROSS_COMPILE")
+          (list (concat (shell-command-to-string "${CROSS_COMPILE}gcc -print-sysroot") "/usr/include"))
+        (if (eq system-type 'windows-nt)
+            '("c:/msys64/mingw64/include" "c:/msys64/mingw64/x86_64-w64-mingw32/include")
+          '("/usr/include" "/usr/local/include"))))
+(setq my-system-path-env-sep (if (eq system-type 'windows-nt) ";" ":"))
+
+(if (getenv "GTAGSLIBPATH")
+    nil
+  (setenv "GTAGSLIBPATH" (mapconcat 'identity my-cc-include-dirs my-system-path-env-sep)))
 
 (load "kconfig-mode")
 (load "makefile-mode-ext")
@@ -26,15 +31,19 @@
   (define-key c-mode-map (kbd "<f5>") 'realgud:gdb))
 
 (defun my-on-c-mode ()
-  (hs-minor-mode)  
+  (hs-minor-mode)
+
   ;; gnu, k&r, bsd, whitesmith, stroustrup, ellemtel, linux, python, java, user
   (setq c-default-style "linux")
+
+  ;; Don't ask before rereading the TAGS files if they have changed
+  (setq tags-revert-without-query t)
+  ;; Don't warn when TAGS files are large
+  (setq large-file-warning-threshold nil)
+
   (company-mode)
   (setq company-backends '(company-c-headers company-gtags company-dabbrev-code company-keywords))
-  (setq company-c-headers-path-system
-        (split-string
-         (getenv "GTAGSLIBPATH")
-         (if (eq system-type 'windows-nt) ";" ":"))))
+  (setq company-c-headers-path-system my-cc-include-dirs))
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
 (add-hook 'c++-mode-hook 'my-on-c-mode)
@@ -48,7 +57,6 @@
   (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
-  (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-dwim)
-  )
+  (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-dwim))
 
 (provide 'setup-my-c)
