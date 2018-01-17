@@ -3,11 +3,17 @@
 
 (auto-install '(yasnippet hungry-delete clean-aindent-mode smartparens
                           dtrt-indent ws-butler expand-region iedit
-                          realgud jinja2-mode))
+                          realgud jinja2-mode highlight-parentheses))
 
 (require 'smartparens-config)
-
 (smartparens-global-mode)
+
+(require 'highlight-parentheses)
+(define-globalized-minor-mode global-highlight-parentheses-mode
+  highlight-parentheses-mode
+  (lambda ()
+	(highlight-parentheses-mode t)))
+(global-highlight-parentheses-mode t)
 
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
