@@ -43,7 +43,9 @@
 
   (company-mode)
   (setq company-backends '(company-c-headers company-gtags company-dabbrev-code company-keywords))
-  (setq company-c-headers-path-system my-cc-include-dirs))
+  (setq company-c-headers-path-system my-cc-include-dirs)
+
+  (local-set-key (kbd "<f1> d") 'man))
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
 (add-hook 'c++-mode-hook 'my-on-c-mode)
