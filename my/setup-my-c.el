@@ -1,7 +1,7 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(counsel-gtags xcscope company-c-headers))
+(auto-install '(counsel-gtags xcscope company-c-headers dts-mode))
 (auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/makefile-mode-ext.el" "makefile-mode-ext.el")
 (auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/kconfig-mode.el" "kconfig-mode.el")
 
