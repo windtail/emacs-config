@@ -51,6 +51,8 @@
 
 ;; 根目录创建一个 .projectile 文件即可被识别为工程根目录（另外，git根目录就自动会被识别）
 (projectile-mode 1)
+(define-key projectile-mode-map (kbd "C-c p s s") 'counsel-projectile-ag)
+(setq-default projectile-globally-ignored-files '("TAGS" "cscope.*"))
 
 ;; turn off ido mode, cancel operation in better-defaults
 (add-hook 'after-init-hook
