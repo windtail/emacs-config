@@ -31,6 +31,25 @@
   (require 'realgud)
   (define-key c-mode-map (kbd "<f5>") 'realgud:gdb))
 
+(defun my-cscope-root-set-p (dir-path)
+  (if (file-exists-p (concat dir-path "cscope.files"))
+      (or (cscope-set-initial-directory dir-path) t)
+    nil))
+
+(defun my-cscope-root-try (subfiles)
+  (or (null subfiles)
+      (let ((f (car subfiles)))
+        (and (file-directory-p f) (my-cscope-root-set-p (concat f "/"))))
+      (my-cscope-root-try (cdr subfiles))))
+
+(defun my-projectile-auto-cscope-init-dirs ()
+  "Automatically find cscope database file in project root or xxx-build directories.
+xxx-build directories are for u-boot and linux in-source separate build directories"
+  (interactive)
+  (if (projectile-project-p) (let ((proj-root (projectile-project-root)))
+    (or (my-cscope-root-set-p proj-root)
+        (my-cscope-root-try (directory-files proj-root t ".*build$" t))))))
+
 (defun my-on-c-mode ()
   (hs-minor-mode)
 
@@ -46,7 +65,8 @@
   (setq company-backends '(company-c-headers company-gtags company-dabbrev-code company-keywords))
   (setq company-c-headers-path-system my-cc-include-dirs)
 
-  (local-set-key (kbd "<f1> d") 'man))
+  (local-set-key (kbd "<f1> d") 'man)
+  (local-set-key (kbd "C-c s M") 'my-projectile-auto-cscope-init-dirs))
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
 (add-hook 'c++-mode-hook 'my-on-c-mode)
