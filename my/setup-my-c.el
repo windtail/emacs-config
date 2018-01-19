@@ -22,7 +22,8 @@
 
 (load "kconfig-mode")
 (load "makefile-mode-ext")
-(add-to-list 'auto-mode-alist '("[Mm]akefile\\..*" . makefile-gmake-mode)) ;; like Makefile.host
+(add-to-list 'auto-mode-alist '("[Mm]akefile\\..*" . makefile-gmake-mode)) ; like Makefile.host
+(add-to-list 'auto-mode-alist '("/Kbuild\\..*" . makefile-gmake-mode))     ; like Kbuild.include
 
 (defun my-gdb-config ()
   (defvar gdb-many-windows t)
