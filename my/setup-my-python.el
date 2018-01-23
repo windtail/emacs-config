@@ -21,6 +21,9 @@
 (require 'py-autopep8)
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
+;; set py.test as test runner
+(add-hook 'elpy-mode-hook (lambda () (elpy-set-test-runner 'elpy-test-pytest-runner)))
+
 (defun my-pdb-config
   (require 'realgud)
   (setq-default realgud:pdb-command-name "python -m pdb"))
