@@ -68,8 +68,14 @@
 
   (define-key rst-mode-map (kbd "<f5> f") 'my-rst2pdf))
 
+(defun my-restview-preview (filepath)
+  "Preview reST in browser and updated on saving"
+  (interactive (list (buffer-file-name)))
+  (start-process "restview" nil "restview" filepath))
+
 (add-hook 'rst-mode-hook 'my-pandoc-setup-pdf)
 (add-hook 'rst-mode-hook 'my-setup-rst2pdf)
 (add-hook 'rst-mode-hook (lambda () (require 'table)))
+(add-hook 'rst-mode-hook (lambda () (define-key rst-mode-map (kbd "C-c C-p") 'my-restview-preview)))
 
 (provide 'setup-my-text)
