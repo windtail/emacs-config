@@ -22,9 +22,12 @@
 (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
 
 ;; set py.test as test runner
-(add-hook 'elpy-mode-hook (lambda () (elpy-set-test-runner 'elpy-test-pytest-runner)))
+(add-hook 'elpy-mode-hook (lambda () (elpy-set-test-runner 'elpy-test-pytest-runner)
+                            (setq python-shell-interpreter "jupyter-console"
+                                  python-shell-interpreter-args "--simple-prompt")))
 
-(defun my-pdb-config
+(defun my-pdb-config ()
+  (interactive)
   (require 'realgud)
   (setq-default realgud:pdb-command-name "python -m pdb"))
 
