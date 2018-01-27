@@ -50,11 +50,25 @@ xxx-build directories are for u-boot and linux in-source separate build director
     (or (my-cscope-root-set-p proj-root)
         (my-cscope-root-try (directory-files proj-root t ".*build$" t))))))
 
+(defun linux-c-indent ()
+  "adjusted defaults for C/C++ mode use"
+  (interactive)
+  (setq tab-width 8)
+  (setq indent-tabs-mode t)
+  (setq c-basic-offset 8)
+  (setq c-set-style "linux"))
+
+(defun iwb ()
+  "indent whole buffer"
+  (interactive)
+  (delete-trailing-whitespace)
+  (indent-region (point-min) (point-max) nil)
+  (untabify (point-min) (point-max)))
+
 (defun my-on-c-mode ()
   (hs-minor-mode)
 
-  ;; gnu, k&r, bsd, whitesmith, stroustrup, ellemtel, linux, python, java, user
-  (setq c-default-style "linux")
+  (linux-c-indent)
 
   ;; Don't ask before rereading the TAGS files if they have changed
   (setq tags-revert-without-query t)
