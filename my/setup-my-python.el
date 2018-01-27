@@ -4,7 +4,7 @@
 (auto-install '(ein
                 elpy
                 flycheck
-                py-autopep8))
+                py-autopep8 live-py-mode))
 
 (require 'setup-my-prog-common)
 

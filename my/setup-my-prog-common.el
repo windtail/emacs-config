@@ -4,6 +4,7 @@
 (auto-install '(yasnippet hungry-delete clean-aindent-mode smartparens
                           dtrt-indent ws-butler expand-region iedit
                           realgud jinja2-mode highlight-parentheses))
+(auto-download-contrib "https://raw.githubusercontent.com/jorgenschaefer/emacs-tdd/master/tdd.el" "tdd.el")
 
 (require 'smartparens-config)
 (smartparens-global-mode)
@@ -32,7 +33,8 @@
   (ws-butler-mode)
   (setq truncate-lines t)
   (yas-minor-mode 1)
-  (setq speedbar-show-unknown-files t))
+  (setq speedbar-show-unknown-files t)
+  (require 'tdd))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 
