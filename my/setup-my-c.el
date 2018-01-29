@@ -1,7 +1,7 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(counsel-gtags xcscope company-c-headers dts-mode))
+(auto-install '(counsel-gtags xcscope company-c-headers dts-mode cmake-mode cmake-project))
 (auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/makefile-mode-ext.el" "makefile-mode-ext.el")
 (auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/kconfig-mode.el" "kconfig-mode.el")
 
@@ -25,11 +25,18 @@
 (add-to-list 'auto-mode-alist '("[Mm]akefile\\..*" . makefile-gmake-mode)) ; like Makefile.host
 (add-to-list 'auto-mode-alist '("/Kbuild\\..*" . makefile-gmake-mode))     ; like Kbuild.include
 
+(require 'cmake-mode)
+(require 'cmake-project)
+
+(defun maybe-cmake-project-hook ()
+  (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
+(add-hook 'c-mode-hook 'maybe-cmake-project-hook)
+(add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
+
 (defun my-gdb-config ()
   (defvar gdb-many-windows t)
   (defvar gdb-show-main t)
-  (require 'realgud)
-  (define-key c-mode-map (kbd "<f5>") 'realgud:gdb))
+  (define-key c-mode-map (kbd "<f5>") 'gdb))
 
 (defun my-cscope-root-set-p (dir-path)
   (if (file-exists-p (concat dir-path "cscope.files"))
@@ -67,7 +74,7 @@ xxx-build directories are for u-boot and linux in-source separate build director
 
 (defun my-on-c-mode ()
   (hs-minor-mode)
-
+  (my-gdb-config)
   (linux-c-indent)
 
   ;; Don't ask before rereading the TAGS files if they have changed
