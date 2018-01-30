@@ -33,10 +33,37 @@
 (add-hook 'c-mode-hook 'maybe-cmake-project-hook)
 (add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
 
-(defun my-gdb-config ()
-  (defvar gdb-many-windows t)
-  (defvar gdb-show-main t)
-  (define-key c-mode-map (kbd "<f5>") 'gdb))
+(setq-default gdb-many-windows t gdb-show-main t)
+
+(defvar my-gdb--last-exe nil "Last executable path for my-gdb command")
+
+(defun my-gdb--do (exepath)
+  "GDB debug a executable.
+If CROSS_COMPILE is detected, a initial gdb script EXEPATH-gdb.gdb will be created.
+The script will connect to gdbserver at port 2331 which is default for jlink gdbserver.
+Please add current directory to safe auto-load path or completed disable safe auto-load feature
+by adding `set auto-load safe-path /' to ~/.gdbinit"
+  (let* ((cross-compile (getenv "CROSS_COMPILE"))
+         (cmd-line (concat cross-compile "gdb -i=mi " exepath))
+         (obj-init (concat exepath "-gdb.gdb")))
+    (if cross-compile
+        (if (file-exists-p obj-init)
+            nil
+          (write-region "target remote localhost:2331\nload\n" nil obj-init)))
+    (setq my-gdb--last-exe exepath)
+    (gdb cmd-line)))
+
+(defun my-start-gdb (exepath)
+  "Choose a file to debug"
+  (interactive "fexecutable to debug:")
+  (my-gdb--do exepath))
+
+(defun my-gdb (with-prefix)
+  "Choose a file to debug or debug last chosen file"
+  (interactive "P")
+  (if (or with-prefix (null my-gdb--last-exe))
+      (call-interactively 'my-start-gdb)
+    (my-gdb--do my-gdb--last-exe)))
 
 (defun my-cscope-root-set-p (dir-path)
   (if (file-exists-p (concat dir-path "cscope.files"))
@@ -74,7 +101,7 @@ xxx-build directories are for u-boot and linux in-source separate build director
 
 (defun my-on-c-mode ()
   (hs-minor-mode)
-  (my-gdb-config)
+
   (linux-c-indent)
 
   ;; Don't ask before rereading the TAGS files if they have changed
@@ -87,7 +114,8 @@ xxx-build directories are for u-boot and linux in-source separate build director
   (setq company-c-headers-path-system my-cc-include-dirs)
 
   (local-set-key (kbd "<f1> d") 'man)
-  (local-set-key (kbd "C-c s M") 'my-projectile-auto-cscope-init-dirs))
+  (local-set-key (kbd "C-c s M") 'my-projectile-auto-cscope-init-dirs)
+  (define-key c-mode-map (kbd "<f5>") 'my-gdb))
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
 (add-hook 'c++-mode-hook 'my-on-c-mode)
