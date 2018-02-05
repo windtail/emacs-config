@@ -16,6 +16,8 @@
 	(highlight-parentheses-mode t)))
 (global-highlight-parentheses-mode t)
 
+(yas-global-mode)
+
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
@@ -32,7 +34,6 @@
   (setq dtrt-indent-verbosity 0)
   (ws-butler-mode)
   (setq truncate-lines t)
-  (yas-minor-mode 1)
   (setq speedbar-show-unknown-files t)
   (require 'tdd))
 

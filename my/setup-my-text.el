@@ -22,8 +22,6 @@
                               "xelatex -interaction nonstopmode -output-directory %o %f"
                               "xelatex -interaction nonstopmode -output-directory %o %f"))
 
-(add-hook 'org-mode-hook 'yas-minor-mode)
-
 (defun my-pandoc-setup-pdf ()
   (if (find-font (font-spec :family="宋体"))
 	  (setq pandoc-rst-cjk-main-font "宋体")
