@@ -87,10 +87,10 @@ xxx-build directories are for u-boot and linux in-source separate build director
 (defun linux-c-indent ()
   "adjusted defaults for C/C++ mode use"
   (interactive)
-  (setq tab-width 8)
+  (c-set-style "linux")
+  (setq tab-width 4)
   (setq indent-tabs-mode t)
-  (setq c-basic-offset 8)
-  (setq c-set-style "linux"))
+  (setq c-basic-offset 4))
 
 (defun iwb ()
   "indent whole buffer"
