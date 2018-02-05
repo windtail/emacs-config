@@ -89,7 +89,7 @@ xxx-build directories are for u-boot and linux in-source separate build director
   (interactive)
   (c-set-style "linux")
   (setq tab-width 4)
-  (setq indent-tabs-mode t)
+  (setq indent-tabs-mode nil)
   (setq c-basic-offset 4))
 
 (defun iwb ()
