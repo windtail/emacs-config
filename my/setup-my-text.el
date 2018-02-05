@@ -1,10 +1,10 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(org markdown-mode markdown-mode+))
+(auto-install '(org markdown-mode markdown-mode+ htmlize))
 
 (require 'org)
-(setq org-src-fontify-native t)
+(setq org-src-fontify-natively t)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -21,6 +21,15 @@
 (setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"
                               "xelatex -interaction nonstopmode -output-directory %o %f"
                               "xelatex -interaction nonstopmode -output-directory %o %f"))
+
+(defun my-pandoc-org2rst ()
+  "convert org to rst using pandoc"
+  (interactive)
+  (set (make-local-variable 'compile-command)
+	   (format "pandoc -o %s.rst %s"
+			   (file-name-sans-extension (file-name-nondirectory (buffer-file-name)))
+			   (file-name-nondirectory (buffer-file-name))))
+  (call-interactively 'compile))
 
 (defun my-pandoc-setup-pdf ()
   (if (find-font (font-spec :family="宋体"))
