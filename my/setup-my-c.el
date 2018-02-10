@@ -109,13 +109,6 @@ xxx-build directories are for u-boot and linux in-source separate build director
   (setq indent-tabs-mode nil)
   (setq c-basic-offset 4))
 
-(defun iwb ()
-  "indent whole buffer"
-  (interactive)
-  (delete-trailing-whitespace)
-  (indent-region (point-min) (point-max) nil)
-  (untabify (point-min) (point-max)))
-
 (defun my-on-c-mode ()
   (hs-minor-mode)
 

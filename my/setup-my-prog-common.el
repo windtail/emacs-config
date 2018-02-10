@@ -28,6 +28,14 @@
                                (interactive)
                                (setq-default compilation-read-command nil)
                                (call-interactively 'compile)))
+
+(defun iwb ()
+  "indent whole buffer"
+  (interactive)
+  (delete-trailing-whitespace)
+  (indent-region (point-min) (point-max) nil)
+  (untabify (point-min) (point-max)))
+
 (defun my-on-prog-mode ()
   (clean-aindent-mode 1)
   (dtrt-indent-mode 1)
