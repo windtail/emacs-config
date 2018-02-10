@@ -51,8 +51,7 @@
 (load-theme 'material-light t)
 
 ;; 根目录创建一个 .projectile 文件即可被识别为工程根目录（另外，git根目录就自动会被识别）
-(projectile-mode 1)
-(define-key projectile-mode-map (kbd "C-c p s s") 'counsel-projectile-ag)
+(counsel-projectile-mode)
 (setq-default projectile-globally-ignored-files '("TAGS" "cscope.*"))
 
 ;; turn off ido mode, cancel operation in better-defaults
@@ -76,7 +75,7 @@
 (global-set-key (kbd "C-c j") 'counsel-git-grep)
 (global-set-key (kbd "C-c k") 'counsel-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
-(global-set-key (kbd "C-c i") 'imenu)
+(global-set-key (kbd "C-c i") 'counsel-imenu)
 
 ;; (require 'workgroups2)
 ;; (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
@@ -86,5 +85,7 @@
 
 (require 'which-key)
 (which-key-mode)
+
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (provide 'setup-my-better-defaults)
