@@ -12,7 +12,8 @@
                 swiper
                 counsel
                 counsel-projectile
-                magit))
+                magit
+                multi-term))
 
 (setq inhibit-startup-message t)
 (menu-bar-mode 0)
