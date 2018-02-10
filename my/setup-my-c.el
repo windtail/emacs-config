@@ -33,6 +33,23 @@
 (add-hook 'c-mode-hook 'maybe-cmake-project-hook)
 (add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
 
+(defun my-cmake-help ()
+  "CMake command help should be in rst-mode rather than cmake-mode"
+  (interactive)
+  (call-interactively 'cmake-help)
+  (let ((buffer (get-buffer "*CMake Help*")))
+    (if buffer (save-selected-window
+      (select-window (display-buffer buffer 'not-this-window))
+      (cmake-mode)
+      (rst-mode)))))
+
+(defun my-cmake-keys ()
+  (local-set-key (kbd "C-c C-c") 'cmake-project-configure-project)
+  (local-set-key (kbd "<f1> d") 'my-cmake-help)
+  (local-set-key (kbd "C-c C-d") 'my-cmake-help))
+
+(add-hook 'cmake-mode-hook 'my-cmake-keys)
+
 (setq-default gdb-many-windows t gdb-show-main t)
 
 (defvar my-gdb--last-exe nil "Last executable path for my-gdb command")
