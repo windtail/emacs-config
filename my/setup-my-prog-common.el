@@ -21,7 +21,10 @@
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
 
-(global-set-key (kbd "M-s e") 'iedit-mode)
+;; iedit should be company with narrow-to-defun/region
+;; or mark a region in iedit-mode and exec iedit-mode again
+(global-set-key (kbd "C-;") 'iedit-mode)
+(put 'narrow-to-region 'disabled nil)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "<f7>") (lambda ()
