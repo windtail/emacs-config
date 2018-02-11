@@ -46,7 +46,8 @@
   (ws-butler-mode)
   (setq truncate-lines t)
   (setq speedbar-show-unknown-files t)
-  (require 'tdd))
+  (require 'tdd)
+  (require 'semantic/sb))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 

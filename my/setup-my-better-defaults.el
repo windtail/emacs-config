@@ -14,7 +14,8 @@
                 counsel-projectile
                 magit
                 multi-term
-                neotree))
+                neotree
+                sr-speedbar))
 
 (setq inhibit-startup-message t)
 (menu-bar-mode 0)
@@ -65,6 +66,8 @@
 (global-set-key (kbd "<f8>") 'neotree-toggle)
 (global-set-key (kbd "C-c p n") 'neotree-projectile-action)
 
+(global-set-key (kbd "<f6>") 'sr-speedbar-toggle)
+
 ;; turn off ido mode, cancel operation in better-defaults
 (add-hook 'after-init-hook
           '(lambda ()
@@ -75,8 +78,6 @@
 (setq ivy-use-virtual-buffers t)
 (setq enable-recursive-minibuffers t)
 (global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key (kbd "<f6>") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
