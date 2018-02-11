@@ -89,6 +89,8 @@
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c i") 'counsel-imenu)
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+
 ;; (require 'workgroups2)
 ;; (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
 ;; (global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
