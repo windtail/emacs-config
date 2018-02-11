@@ -1,6 +1,7 @@
 *~
 *.elc
 ##*##
+#*#
 elpa/
 backups/
 auto-save-list/
@@ -10,5 +11,7 @@ places
 recentf
 ido.*
 projectile-bookmarks.eld
+projectile.cache
+session.*
 /tramp
 contrib/
