@@ -13,7 +13,8 @@
                 counsel
                 counsel-projectile
                 magit
-                multi-term))
+                multi-term
+                neotree))
 
 (setq inhibit-startup-message t)
 (menu-bar-mode 0)
@@ -53,6 +54,13 @@
 ;; 根目录创建一个 .projectile 文件即可被识别为工程根目录（另外，git根目录就自动会被识别）
 (counsel-projectile-mode)
 (setq-default projectile-globally-ignored-files '("TAGS" "cscope.*"))
+
+(require 'neotree)
+(setq neo-smart-open t)
+(add-hook 'projectile-after-switch-project-hook 'neotree-projectile-action)
+
+(global-set-key (kbd "<f8>") 'neotree-toggle)
+(global-set-key (kbd "C-c p n") 'neotree-projectile-action)
 
 ;; turn off ido mode, cancel operation in better-defaults
 (add-hook 'after-init-hook
