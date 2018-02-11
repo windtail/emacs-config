@@ -119,7 +119,7 @@ xxx-build directories are for u-boot and linux in-source separate build director
   ;; Don't warn when TAGS files are large
   (setq large-file-warning-threshold nil)
 
-  (setq-local company-backends '(company-c-headers company-gtags company-dabbrev-code company-keywords))
+  (add-to-list (make-local-variable 'company-backends) 'company-c-headers)
   (setq company-c-headers-path-system my-cc-include-dirs)
 
   (local-set-key (kbd "<f1> d") 'man)
