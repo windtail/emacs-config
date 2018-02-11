@@ -29,6 +29,9 @@
 (setq ibuffer-use-other-window t)
 (window-numbering-mode t)
 
+;; maximize initial frame
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 ;; 使用本地编码，避免Windows上各种中文问题
 (set-locale-environment)
 
