@@ -86,25 +86,6 @@ by adding `set auto-load safe-path /' to ~/.gdbinit"
       (call-interactively 'my-start-gdb)
     (my-gdb--do my-gdb--last-exe)))
 
-(defun my-cscope-root-set-p (dir-path)
-  (if (file-exists-p (concat dir-path "cscope.files"))
-      (or (cscope-set-initial-directory dir-path) t)
-    nil))
-
-(defun my-cscope-root-try (subfiles)
-  (or (null subfiles)
-      (let ((f (car subfiles)))
-        (and (file-directory-p f) (my-cscope-root-set-p (concat f "/"))))
-      (my-cscope-root-try (cdr subfiles))))
-
-(defun my-projectile-auto-cscope-init-dirs ()
-  "Automatically find cscope database file in project root or xxx-build directories.
-xxx-build directories are for u-boot and linux in-source separate build directories"
-  (interactive)
-  (if (projectile-project-p) (let ((proj-root (projectile-project-root)))
-    (or (my-cscope-root-set-p proj-root)
-        (my-cscope-root-try (directory-files proj-root t ".*build$" t))))))
-
 (defun linux-c-indent ()
   "adjusted defaults for C/C++ mode use"
   (interactive)
@@ -134,6 +115,20 @@ xxx-build directories are for u-boot and linux in-source separate build director
 (add-hook 'c++-mode-hook 'my-on-c-mode)
 
 (cscope-setup)
+
+;; set default cscope initial directory to project root
+(add-hook 'projectile-after-switch-project-hook
+          #'(lambda ()
+              (cscope-set-initial-directory (projectile-project-root))))
+
+;; set initial directory starting from old one
+(defun my-cscope-set-initial-directory (cs-id)
+  (interactive (list
+                (read-directory-name "cscope initial directory: "
+                                     (or cscope-initial-directory default-directory))))
+  (cscope-set-initial-directory cs-id))
+(define-key cscope-minor-mode-keymap (kbd "C-c s a") 'my-cscope-set-initial-directory)
+
 (add-hook 'c-mode-hook 'counsel-gtags-mode)
 (add-hook 'c++-mode-hook 'counsel-gtags-mode)
 
