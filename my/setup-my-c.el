@@ -26,12 +26,6 @@
 (add-to-list 'auto-mode-alist '("/Kbuild\\..*" . makefile-gmake-mode))     ; like Kbuild.include
 
 (require 'cmake-mode)
-(require 'cmake-project)
-
-(defun maybe-cmake-project-hook ()
-  (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
-(add-hook 'c-mode-hook 'maybe-cmake-project-hook)
-(add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
 
 (defun my-cmake-help ()
   "CMake command help should be in rst-mode rather than cmake-mode"
@@ -44,11 +38,21 @@
       (rst-mode)))))
 
 (defun my-cmake-keys ()
-  (local-set-key (kbd "C-c C-c") 'cmake-project-configure-project)
   (local-set-key (kbd "<f1> d") 'my-cmake-help)
   (local-set-key (kbd "C-c C-d") 'my-cmake-help))
 
 (add-hook 'cmake-mode-hook 'my-cmake-keys)
+
+(require 'cmake-project)
+
+(defun maybe-cmake-project-hook ()
+  (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
+(add-hook 'c-mode-hook 'maybe-cmake-project-hook)
+(add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
+
+(projectile-register-project-type 'cmake '("CMakeLists.txt")
+                                  :compile "cmake --build build"
+                                  :configure "mkdir -p build && cd build && cmake ..")
 
 (setq-default gdb-many-windows t gdb-show-main t)
 
