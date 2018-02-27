@@ -1,7 +1,7 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(yasnippet hungry-delete clean-aindent-mode smartparens
+(auto-install '(yasnippet yasnippet-snippets hungry-delete clean-aindent-mode smartparens
                           dtrt-indent ws-butler expand-region iedit
                           realgud jinja2-mode highlight-parentheses))
 (auto-download-contrib "https://raw.githubusercontent.com/jorgenschaefer/emacs-tdd/master/tdd.el" "tdd.el")
