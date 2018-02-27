@@ -47,7 +47,8 @@
   (setq truncate-lines t)
   (setq speedbar-show-unknown-files t)
   (require 'tdd)
-  (require 'semantic/sb))
+  (require 'semantic/sb)
+  (add-to-list 'write-file-functions 'delete-trailing-whitespace))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 
