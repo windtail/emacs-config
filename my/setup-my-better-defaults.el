@@ -58,6 +58,21 @@
 (counsel-projectile-mode)
 (setq-default projectile-globally-ignored-files '("TAGS" "cscope.*"))
 
+(defun my-projectile-load-project-script (name)
+  (if (projectile-project-p)
+      (let ((script-path (concat (projectile-project-root) name)))
+        (if (file-exists-p script-path)
+            (load-file script-path)))))
+
+(defun my-projectile-run-setup ()
+  (interactive)
+  (my-projectile-load-project-script ".project-setup.el"))
+(defun my-projectile-run-teardown ()
+  (interactive)
+  (my-projectile-load-project-script ".project-teardown.el"))
+(add-hook 'projectile-before-switch-project-hook 'my-projectile-run-teardown)
+(add-hook 'projectile-after-switch-project-hook 'my-projectile-run-setup)
+
 ;; turn off ido mode, cancel operation in better-defaults
 (add-hook 'after-init-hook
           '(lambda ()

@@ -111,10 +111,18 @@ by adding `set auto-load safe-path /' to ~/.gdbinit"
 
 (cscope-setup)
 
+(defvar cscope-set-initial-directory-for-projectile--root nil "Ensure running `cscope-set-initial-directory-for-projectile' only once")
+(defun cscope-set-initial-directory-for-projectile (cs-id)
+  "set cscope initial directory for a project only once"
+  (when (projectile-project-p)
+    (unless (equal cscope-set-initial-directory-for-projectile--root (projectile-project-root))
+      (setq cscope-set-initial-directory-for-projectile--root (projectile-project-root))
+      (cscope-set-initial-directory cs-id))))
+
 ;; set default cscope initial directory to project root
 (add-hook 'projectile-after-switch-project-hook
           #'(lambda ()
-              (cscope-set-initial-directory (projectile-project-root))))
+              (cscope-set-initial-directory-for-projectile (projectile-project-root))) t)
 
 ;; set initial directory starting from old one
 (defun my-cscope-set-initial-directory (cs-id)
