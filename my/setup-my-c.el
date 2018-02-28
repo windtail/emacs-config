@@ -1,7 +1,7 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(counsel-gtags xcscope company-c-headers dts-mode cmake-mode cmake-project))
+(auto-install '(xcscope company-c-headers dts-mode cmake-mode cmake-project))
 (auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/makefile-mode-ext.el" "makefile-mode-ext.el")
 (auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/kconfig-mode.el" "kconfig-mode.el")
 
@@ -14,11 +14,6 @@
         (if (eq system-type 'windows-nt)
             '("c:/msys64/mingw64/include" "c:/msys64/mingw64/x86_64-w64-mingw32/include")
           '("/usr/include" "/usr/local/include"))))
-(setq my-system-path-env-sep (if (eq system-type 'windows-nt) ";" ":"))
-
-(if (getenv "GTAGSLIBPATH")
-    nil
-  (setenv "GTAGSLIBPATH" (mapconcat 'identity my-cc-include-dirs my-system-path-env-sep)))
 
 (load "kconfig-mode")
 (load "makefile-mode-ext")
@@ -128,15 +123,5 @@ by adding `set auto-load safe-path /' to ~/.gdbinit"
                                      (or cscope-initial-directory default-directory))))
   (cscope-set-initial-directory cs-id))
 (define-key cscope-minor-mode-keymap (kbd "C-c s a") 'my-cscope-set-initial-directory)
-
-(add-hook 'c-mode-hook 'counsel-gtags-mode)
-(add-hook 'c++-mode-hook 'counsel-gtags-mode)
-
-(with-eval-after-load 'counsel-gtags
-  (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
-  (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-  (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-  (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
-  (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-dwim))
 
 (provide 'setup-my-c)

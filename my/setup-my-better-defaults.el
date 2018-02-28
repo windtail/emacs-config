@@ -14,8 +14,7 @@
                 counsel-projectile
                 magit
                 multi-term
-                neotree
-                sr-speedbar))
+                bm))
 
 (setq inhibit-startup-message t)
 (menu-bar-mode 0)
@@ -59,15 +58,6 @@
 (counsel-projectile-mode)
 (setq-default projectile-globally-ignored-files '("TAGS" "cscope.*"))
 
-(require 'neotree)
-(setq neo-smart-open t)
-(add-hook 'projectile-after-switch-project-hook 'neotree-projectile-action)
-
-(global-set-key (kbd "<f8>") 'neotree-toggle)
-(global-set-key (kbd "C-c p n") 'neotree-projectile-action)
-
-(global-set-key (kbd "<f6>") 'sr-speedbar-toggle)
-
 ;; turn off ido mode, cancel operation in better-defaults
 (add-hook 'after-init-hook
           '(lambda ()
@@ -101,5 +91,9 @@
 (which-key-mode)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
+
+(global-set-key (kbd "<f2>") 'bm-toggle)
+(global-set-key (kbd "C-<f2>") 'bm-next)
+(global-set-key (kbd "S-<f2>") 'bm-previous)
 
 (provide 'setup-my-better-defaults)
