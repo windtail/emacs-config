@@ -3,14 +3,16 @@
 
 (auto-install '(better-defaults
                 material-theme
-                workgroups2
                 which-key
                 volatile-highlights
                 company
                 window-numbering
                 projectile
+                ivy
+                ivy-hydra
                 swiper
                 counsel
+                wgrep
                 counsel-projectile
                 magit
                 multi-term
@@ -47,6 +49,9 @@
 (setq-default company-idle-delay 0.05)  ;; 0 will cause company-clang error on windows-nt
 (setq-default company-async-timeout 5)  ;; company-clang very slow on windows-nt
 (setq-default company-minimum-prefix-length 2)
+
+;; whitespace can be insert when finding completes
+(define-key company-mode-map (kbd "C-c c") 'counsel-company)
 
 (global-set-key (kbd "C-c w") 'whitespace-mode)
 (global-set-key (kbd "C-x g") 'magit-status)
@@ -88,23 +93,18 @@
 (global-set-key (kbd "<f1> f") 'counsel-describe-function)
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f1> l") 'counsel-find-library)
-(global-set-key (kbd "C-c g") 'counsel-git)
-(global-set-key (kbd "C-c j") 'counsel-git-grep)
-(global-set-key (kbd "C-c k") 'counsel-ag)
 (global-set-key (kbd "C-x l") 'counsel-locate)
-(global-set-key (kbd "C-c i") 'counsel-imenu)
+
+(require 'wgrep)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
-
-;; (require 'workgroups2)
-;; (global-set-key (kbd "s-z") 'wg-switch-to-workgroup)
-;; (global-set-key (kbd "s-/") 'wg-switch-to-previous-workgroup)
 
 (volatile-highlights-mode t)
 
 (require 'which-key)
 (which-key-mode)
 
+;; y for yes, n for no, always
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (global-set-key (kbd "<f2>") 'bm-toggle)

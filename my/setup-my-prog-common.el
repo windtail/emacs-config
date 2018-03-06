@@ -18,12 +18,20 @@
 
 (yas-global-mode)
 
-(semantic-mode)
 (setq semantic-default-submodes
       '(global-semanticdb-minor-mode
         global-semantic-idle-scheduler-mode
         global-semantic-idle-summary-mode
-        global-semantic-mru-bookmark-mode))
+        global-semantic-decoration-mode
+        global-semantic-highlight-func-mode
+        global-semantic-stickyfunc-mode
+        global-semantic-mru-bookmark-mode
+        global-semantic-idle-local-symbol-highlight-mode
+        global-semantic-highlight-edits-mode
+        global-semantic-show-unmatched-syntax-mode))
+(semantic-mode)
+
+(global-set-key (kbd "C-c i") 'counsel-semantic-or-imenu)
 
 (require 'ecb)
 (setq ecb-tip-of-the-day nil)
@@ -33,6 +41,8 @@
       (ecb-deactivate)
     (ecb-activate)))
 (global-set-key (kbd "<f8>") 'my-ecb-toggle)
+
+(global-set-key (kbd "<f6>") 'sr-speedbar-toggle)
 
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
@@ -64,7 +74,8 @@
   (setq speedbar-show-unknown-files t)
   (require 'tdd)
   (require 'semantic/sb)
-  (add-to-list 'write-file-functions 'delete-trailing-whitespace))
+  (add-to-list 'write-file-functions 'delete-trailing-whitespace)
+  (hungry-delete-mode))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 

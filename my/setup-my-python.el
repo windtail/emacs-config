@@ -4,7 +4,8 @@
 (auto-install '(ein
                 elpy
                 flycheck
-                py-autopep8 live-py-mode))
+                py-autopep8
+                live-py-mode))
 
 (require 'setup-my-prog-common)
 
@@ -26,7 +27,7 @@
                             (setq python-shell-interpreter "jupyter-console"
                                   python-shell-interpreter-args "--simple-prompt")))
 
-(defun my-pdb-config ()
+(defun my-py-config-pdb ()
   (interactive)
   (require 'realgud)
   (setq-default realgud:pdb-command-name "python -m pdb"))

@@ -5,12 +5,7 @@
   (interactive)
   (find-file user-init-file))
 
-(defun my-open-custom-dir ()
-  "open custom directory"
-  (interactive)
-  (dired (concat user-emacs-directory "my/")))
-
-(global-set-key (kbd "<f6>") 'my-edit-init-file)
+(global-set-key (kbd "<f1> h") 'my-edit-init-file)
 (global-set-key (kbd "C-c C-f") 'find-file-at-point)
 
 (provide 'setup-my-hack-emacs)
