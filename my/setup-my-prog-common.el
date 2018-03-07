@@ -3,7 +3,7 @@
 
 (auto-install '(yasnippet yasnippet-snippets hungry-delete clean-aindent-mode smartparens
                           dtrt-indent ws-butler expand-region iedit
-                          realgud jinja2-mode highlight-parentheses sr-speedbar ecb))
+                          realgud jinja2-mode highlight-parentheses sr-speedbar))
 (auto-download-contrib "https://raw.githubusercontent.com/jorgenschaefer/emacs-tdd/master/tdd.el" "tdd.el")
 
 (require 'smartparens-config)
@@ -30,17 +30,6 @@
         global-semantic-highlight-edits-mode
         global-semantic-show-unmatched-syntax-mode))
 (semantic-mode)
-
-(global-set-key (kbd "C-c i") 'counsel-semantic-or-imenu)
-
-(require 'ecb)
-(setq ecb-tip-of-the-day nil)
-(defun my-ecb-toggle ()
-  (interactive)
-  (if (bound-and-true-p ecb-minor-mode)
-      (ecb-deactivate)
-    (ecb-activate)))
-(global-set-key (kbd "<f8>") 'my-ecb-toggle)
 
 (global-set-key (kbd "<f6>") 'sr-speedbar-toggle)
 

@@ -10,6 +10,7 @@
                 projectile
                 ivy
                 ivy-hydra
+                avy
                 swiper
                 counsel
                 wgrep
@@ -20,7 +21,7 @@
 
 (setq inhibit-startup-message t)
 (menu-bar-mode 0)
-(tool-bar-mode 0)
+; (tool-bar-mode 0)
 ; (scroll-bar-mode 0)
 (global-auto-revert-mode)
 (global-hl-line-mode)
@@ -94,6 +95,7 @@
 (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
 (global-set-key (kbd "<f1> l") 'counsel-find-library)
 (global-set-key (kbd "C-x l") 'counsel-locate)
+(global-set-key (kbd "C-c i") 'counsel-semantic-or-imenu)
 
 (require 'wgrep)
 

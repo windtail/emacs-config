@@ -7,7 +7,7 @@
 
 (require 'setup-my-prog-common)
 
-(defvar cross-compile nil "cross compile prefix, such as arm-linux-gnueabihf-")
+(defvar cross-compile (getenv "CROSS_COMPILE") "cross compile prefix, such as arm-linux-gnueabihf-")
 
 ;; -----------------------------------------
 ;; kbuild, makefile, cmake
@@ -32,20 +32,46 @@
                                   :compile "cmake --build build"
                                   :configure "mkdir -p build && cd build && cmake ..")
 
+(defun my-cmake-configure (source-directory build-directory &optional flags)
+  (interactive "Dsource directory:\nDbuild directory:\nMadditional flags:")
+  (make-directory build-directory t)
+  (let ((default-directory build-directory))
+      (compilation-start
+       (concat
+        "cd ."
+        " && cd " (shell-quote-argument (expand-file-name build-directory))
+        " && cmake " flags (shell-quote-argument (expand-file-name source-directory))))
+      (setq compile-command (concat "cmake --build " (expand-file-name build-directory)))))
+
+(defun my-projectile-cmake-configure (build-directory &optional flags)
+  (interactive "Dbuild directory:\nMadditional flags:")
+  (my-cmake-configure (projectile-project-root) build-directory flags))
+
 ;; ------------------------------------------------------------
 ;; gdb debug configurations
 
 (setq-default gdb-many-windows t gdb-show-main t)
 
 (defvar my-gdb-debug-executable nil "executable used for gdb")
+(defvar my-gdb-debug-host "localhost" "gdbserver host")
+(defvar my-gdb-debug-port "2345" "gdbserver port")
+
+(defun my-gdb-start (executable &optional host port)
+  (if (file-directory-p executable)
+      (message (concat executable "is a directory, file expected"))
+    (gdb (concat cross-compile
+                 "gdb -i=mi "
+                 (if host (format "-ex target remote %s:%s " host port))
+                 executable))
+	(setq my-gdb-debug-executable executable)
+	(if host (setq my-gdb-debug-host host))
+	(if port (setq my-gdb-debug-port port))))
 
 (defun my-gdb (executable)
   (interactive (list (if (or current-prefix-arg (null my-gdb-debug-executable))
                          (read-file-name "executable to debug: ")
                        my-gdb-debug-executable)))
-  (if (file-directory-p executable)
-      (message (concat executable "is a directory, file expected"))
-   (gdb (concat cross-compile "gdb -i=mi " executable))))
+  (my-gdb-start (expand-file-name executable)))
 
 (defun my-gdb-remote (executable &optional host port)
   (interactive (list (if (or current-prefix-arg (null my-gdb-debug-executable))
@@ -56,15 +82,16 @@
                        "localhost")
                      (if current-prefix-arg (read-minibuffer "port gdbserver is listening: " "2345")
                        "2345")))
-  (if (file-directory-p executable)
-      (message (concat executable "is a directory, file expected"))
-    (gdb (concat cross-compile
-                 "gdb -i=mi "
-                 (format "-ex target remote %s:%s " host port)
-                 executable))))
+  (my-gdb-start (expand-file-name executable host port)))
 
 ;; ----------------------------------------------------
 ;; symbol and semantic
+
+;; Don't ask before rereading the TAGS files if they have changed
+(setq tags-revert-without-query t)
+
+;; Don't warn when TAGS files are large
+(setq large-file-warning-threshold nil)
 
 (cscope-setup)
 
@@ -97,7 +124,7 @@
 (global-set-key (kbd "C-c g f") 'counsel-gtags-find-file)
 (global-set-key (kbd "C-c g .") 'counsel-gtags-go-forward)
 (global-set-key (kbd "C-c g ,") 'counsel-gtags-go-backward)
-(global-set-key (kbd "C-c g w") 'counsel-gtags-dwim)
+(global-set-key (kbd "C-c g m") 'counsel-gtags-dwim)
 
 ;; -----------------------------------------------------
 
@@ -108,12 +135,6 @@
   (setq tab-width 4)
   (setq indent-tabs-mode nil)
   (setq c-basic-offset 4))
-
-;; Don't ask before rereading the TAGS files if they have changed
-(setq tags-revert-without-query t)
-
-;; Don't warn when TAGS files are large
-(setq large-file-warning-threshold nil)
 
 (defun company-c-headers-path-system ()
   (if (boundp 'semantic-c-dependency-system-include-path)
