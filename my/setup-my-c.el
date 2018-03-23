@@ -8,6 +8,28 @@
 (require 'setup-my-prog-common)
 
 (defvar cross-compile (getenv "CROSS_COMPILE") "cross compile prefix, such as arm-linux-gnueabihf-")
+(defvar cross-compile-arch (getenv "ARCH") "architecture for cross compiling")
+
+(defun my-setup-cross-compile(toolchain-prefix arch)
+  "Setup cross compile environment"
+  (interactive (list
+				(read-string "Prefix of toolchain: " "arm-linux-gnueabihf-")
+				(read-string "Architecture of target: " "arm")))
+  (setq-default cross-compile toolchain-prefix)
+  (setenv "CROSS_COMPILE" cross-compile)
+  (setq-default cross-compile-arch arch)
+  (setenv "ARCH" cross-compile-arch))
+
+(defvar saved-cross-compile nil "`cross-compile' before `my-save-cross-compile'")
+(defvar saved-cross-compile-arch nil "`cross-compile-arch' before `my-save-cross-compile'")
+
+(defun my-save-cross-compile ()
+  (setq saved-cross-compile cross-compile)
+  (setq saved-cross-compile-arch cross-compile-arch))
+
+(defun my-restore-cross-compile ()
+  (setq cross-compile saved-cross-compile)
+  (setq cross-compile-arch saved-cross-compile-arch))
 
 ;; -----------------------------------------
 ;; kbuild, makefile, cmake
@@ -19,8 +41,8 @@
 
 (require 'cmake-mode)
 (add-hook 'cmake-mode-hook (lambda ()
-                             (define-key c-mode-map (kbd "<f1> d") 'cmake-help)
-                             (define-key c-mode-map (kbd "C-c C-d") 'cmake-help)))
+                             (local-set-key (kbd "<f1> d") 'cmake-help)
+                             (local-set-key (kbd "C-c C-d") 'cmake-help)))
 
 (require 'cmake-project)
 (defun maybe-cmake-project-hook ()
@@ -80,9 +102,10 @@
                      (if current-prefix-arg
                          (read-minibuffer "host gdbserver is running: " "localhost")
                        "localhost")
-                     (if current-prefix-arg (read-minibuffer "port gdbserver is listening: " "2345")
+                     (if current-prefix-arg
+                         (read-minibuffer "port gdbserver is listening: " "2345")
                        "2345")))
-  (my-gdb-start (expand-file-name executable host port)))
+  (my-gdb-start ((expand-file-name executable) host port)))
 
 ;; ----------------------------------------------------
 ;; symbol and semantic
@@ -101,14 +124,16 @@
 (defun my-projectile-cscope-set-initial-directory (cs-id)
   "set cscope initial directory for a project only once"
   (when (projectile-project-p)
-    (unless (equal my-projectile-cscope-project-root (projectile-project-root))
+    (unless (string= my-projectile-cscope-project-root (projectile-project-root)))
       (setq my-projectile-cscope-project-root (projectile-project-root))
-      (cscope-set-initial-directory cs-id))))
+      (cscope-set-initial-directory cs-id)))
 
 ;; set default cscope initial directory to project root
+;; only if cscope initial directory not set in .project-setup.el
 (add-hook 'projectile-after-switch-project-hook
           #'(lambda ()
-              (my-projectile-cscope-set-initial-directory (projectile-project-root))) t)
+			(my-projectile-cscope-set-initial-directory (projectile-project-root)))
+		  t)
 
 ;; set initial directory starting from old one
 (defun my-cscope-set-initial-directory (cs-id)
@@ -117,6 +142,40 @@
                                      (or cscope-initial-directory default-directory))))
   (cscope-set-initial-directory cs-id))
 (define-key cscope-minor-mode-keymap (kbd "C-c s a") 'my-cscope-set-initial-directory)
+
+(defun my-semantic-try-add-system-include (base-dir rel-dir)
+  (let ((inc-dir (concat (file-name-as-directory base-dir) rel-dir)))
+    (if (file-directory-p inc-dir)
+        (semantic-add-system-include inc-dir 'c-mode))))
+
+(defun my-semantic-gcc-setup (triplet)
+  (interactive "sTriplet: ")
+  (let* ((gcc (concat triplet "gcc"))
+         (gcc-sysroot (s-trim (shell-command-to-string (concat gcc " -print-sysroot"))))
+         (gcc-inc (concat (file-name-as-directory gcc-sysroot) "usr/include")))
+    (semantic-add-system-include gcc-inc 'c-mode)))
+
+(defun my-projectile-setup-arm-embedded (project-root &optional build-root project-incs build-incs)
+  "setup arm embedded c project
+
+incs are all relative to project-root or build-root"
+  (let* ((build-root (or build-root project-root))
+        (triplet "arm-linux-gnueabihf-")
+        (arch "arm")
+        (p-incs (append (list "include" (format "arch/%s/include" arch)) project-incs))
+        (b-incs (append (list "include" "include/generated") build-incs)))
+    (my-save-cross-compile)
+    (my-setup-cross-compile triplet arch)
+	(my-projectile-cscope-set-initial-directory build-root)
+	(semantic-reset-system-include 'c-mode)
+    (dolist (inc p-incs) (my-semantic-try-add-system-include project-root inc))
+    (dolist (inc b-incs) (my-semantic-try-add-system-include build-root inc))
+    (my-semantic-gcc-setup triplet)))
+
+(defun my-projectile-teardown-arm-embedded ()
+  (my-restore-cross-compile)
+  (semantic-reset-system-include 'c-mode)
+  (semantic-gcc-setup))
 
 (global-set-key (kbd "C-c g d") 'counsel-gtags-find-definition)
 (global-set-key (kbd "C-c g r") 'counsel-gtags-find-reference)
