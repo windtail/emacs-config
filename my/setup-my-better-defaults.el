@@ -16,6 +16,7 @@
                 wgrep
                 counsel-projectile
                 magit
+                gitignore-mode
                 multi-term
                 bm))
 

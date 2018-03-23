@@ -3,7 +3,7 @@
 
 (auto-install '(yasnippet yasnippet-snippets hungry-delete clean-aindent-mode smartparens
                           dtrt-indent ws-butler expand-region iedit
-                          realgud jinja2-mode highlight-parentheses sr-speedbar))
+                          realgud jinja2-mode highlight-parentheses sr-speedbar srefactor))
 (auto-download-contrib "https://raw.githubusercontent.com/jorgenschaefer/emacs-tdd/master/tdd.el" "tdd.el")
 
 (require 'smartparens-config)
@@ -30,7 +30,7 @@
         global-semantic-highlight-edits-mode
         global-semantic-show-unmatched-syntax-mode))
 (semantic-mode)
-
+(global-set-key (kbd "<f12>") 'semantic-ia-fast-jump)
 (global-set-key (kbd "<f6>") 'sr-speedbar-toggle)
 
 (require 'expand-region)
