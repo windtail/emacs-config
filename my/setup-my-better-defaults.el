@@ -2,11 +2,16 @@
 (require 'setup-my-auto-install)
 
 (auto-install '(better-defaults
-                material-theme
+                danneskjold-theme
+                zenburn-theme
+                nimbus-theme
+                leuven-theme
                 which-key
                 volatile-highlights
                 company
-                window-numbering
+                ace-window
+                ace-link
+                ace-jump-mode
                 projectile
                 ivy
                 ivy-hydra
@@ -17,13 +22,19 @@
                 counsel-projectile
                 magit
                 gitignore-mode
+                git-timemachine
                 multi-term
-                bm))
+                bm
+                helpful
+                hl-todo
+                highlight-thing
+                spaceline
+                diminish))
 
 (setq inhibit-startup-message t)
 (menu-bar-mode 0)
-; (tool-bar-mode 0)
-; (scroll-bar-mode 0)
+;; (tool-bar-mode 0)
+;; (scroll-bar-mode 0)
 (global-auto-revert-mode)
 (global-hl-line-mode)
 (setq mode-require-final-newline t)
@@ -31,7 +42,6 @@
 (global-linum-mode t)
 (setq column-number-mode t)
 (setq ibuffer-use-other-window t)
-(window-numbering-mode t)
 
 ;; maximize initial frame
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
@@ -59,7 +69,12 @@
 (global-set-key (kbd "C-x g") 'magit-status)
 
 ;; theme
-(load-theme 'material-light t)
+(load-theme 'danneskjold t)
+
+(require 'spaceline-config)
+(spaceline-emacs-theme)
+
+;; (diminish 'company-mode)
 
 ;; 根目录创建一个 .projectile 文件即可被识别为工程根目录（另外，git根目录就自动会被识别）
 (counsel-projectile-mode)
@@ -98,6 +113,14 @@
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c i") 'counsel-semantic-or-imenu)
 
+(custom-set-default 'counsel-describe-function-function 'helpful-function)
+(custom-set-default 'counsel-describe-variable-function 'helpful-variable)
+(global-set-key (kbd "C-h f") #'helpful-callable)
+(global-set-key (kbd "C-h v") #'helpful-variable)
+(global-set-key (kbd "C-h k") #'helpful-key)
+(global-set-key (kbd "C-h F") #'helpful-function)
+(global-set-key (kbd "C-h C") #'helpful-command)
+
 (require 'wgrep)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -113,5 +136,12 @@
 (global-set-key (kbd "<f2>") 'bm-toggle)
 (global-set-key (kbd "C-<f2>") 'bm-next)
 (global-set-key (kbd "S-<f2>") 'bm-previous)
+
+(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
+(global-set-key (kbd "M-o") 'ace-window)
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+(ace-link-setup-default)
+
+(global-hl-todo-mode)
 
 (provide 'setup-my-better-defaults)

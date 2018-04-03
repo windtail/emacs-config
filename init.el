@@ -10,6 +10,7 @@
   (require 'setup-my-windows-nt))
 
 (require 'setup-my-c)
+(require 'setup-my-cross-compile)
 (require 'setup-my-python)
 (require 'setup-my-lua)
 (require 'setup-my-text)

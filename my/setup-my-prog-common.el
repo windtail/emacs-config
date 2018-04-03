@@ -3,18 +3,13 @@
 
 (auto-install '(yasnippet yasnippet-snippets hungry-delete clean-aindent-mode smartparens
                           dtrt-indent ws-butler expand-region iedit
-                          realgud jinja2-mode highlight-parentheses sr-speedbar srefactor))
+                          realgud jinja2-mode sr-speedbar srefactor
+                          rainbow-delimiters highlight-indentation aggressive-indent
+                          multi-compile))
 (auto-download-contrib "https://raw.githubusercontent.com/jorgenschaefer/emacs-tdd/master/tdd.el" "tdd.el")
 
 (require 'smartparens-config)
 (smartparens-global-mode)
-
-(require 'highlight-parentheses)
-(define-globalized-minor-mode global-highlight-parentheses-mode
-  highlight-parentheses-mode
-  (lambda ()
-	(highlight-parentheses-mode t)))
-(global-highlight-parentheses-mode t)
 
 (yas-global-mode)
 
@@ -31,6 +26,13 @@
         global-semantic-show-unmatched-syntax-mode))
 (semantic-mode)
 (global-set-key (kbd "<f12>") 'semantic-ia-fast-jump)
+
+(defadvice semantic-add-system-include (around semantic-try-add-system-include activate)
+  "add system include if path exists"
+  (interactive "DNew Include Directory: ")
+  (if (file-directory-p dir)
+	  ad-do-it))
+
 (global-set-key (kbd "<f6>") 'sr-speedbar-toggle)
 
 (require 'expand-region)
@@ -40,6 +42,9 @@
 ;; or mark a region in iedit-mode and exec iedit-mode again
 (global-set-key (kbd "C-;") 'iedit-mode)
 (put 'narrow-to-region 'disabled nil)
+
+(global-aggressive-indent-mode)
+;; (add-to-list 'aggressive-indent-excluded-modes 'xxx-mode)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "<f7>") (lambda ()
@@ -64,7 +69,10 @@
   (require 'tdd)
   (require 'semantic/sb)
   (add-to-list 'write-file-functions 'delete-trailing-whitespace)
-  (hungry-delete-mode))
+  (hungry-delete-mode)
+  (rainbow-delimiters-mode)
+  (aggressive-indent-mode)
+  (highlight-indentation-mode))
 
 (add-hook 'prog-mode-hook 'my-on-prog-mode)
 
