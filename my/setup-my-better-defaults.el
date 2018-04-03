@@ -29,6 +29,7 @@
                 hl-todo
                 highlight-thing
                 spaceline
+                spaceline-all-the-icons
                 diminish))
 
 (setq inhibit-startup-message t)
@@ -73,6 +74,9 @@
 
 (require 'spaceline-config)
 (spaceline-emacs-theme)
+
+(require 'spaceline-all-the-icons)
+(spaceline-all-the-icons-theme)
 
 ;; (diminish 'company-mode)
 
