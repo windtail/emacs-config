@@ -81,7 +81,7 @@ incs are all relative to project-root or build-root"
 										 '("include" "arch/arm/include" "arch/arm/include/uapi")
 										 '("include" "include/uapi" "include/generated" "include/generated/uapi" "arch/arm/include/generated" "arch/arm/include/generated/uapi")))
 
-(defun cros-compile-teardown-arm-linux ()
+(defun cross-compile-teardown-arm-linux ()
   (cross-compile-reset)
   (cross-compile-teardown-baremetal-project))
 
@@ -91,7 +91,7 @@ incs are all relative to project-root or build-root"
 										 build-directory
 										 '("include" "arch/arm/include")
 										 '("include" "include/generated" "arch/arm/include/generated")))
-(defun cros-compile-teardown-arm-u-boot ()
+(defun cross-compile-teardown-arm-u-boot ()
   (cross-compile-reset)
   (cross-compile-teardown-baremetal-project))
 
