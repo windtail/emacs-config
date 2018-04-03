@@ -110,20 +110,17 @@
 (setq enable-recursive-minibuffers t)
 (global-set-key (kbd "C-s") 'swiper)
 (global-set-key (kbd "M-x") 'counsel-M-x)
+(global-set-key (kbd "M-y") 'counsel-yank-pop)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "<f1> f") 'counsel-describe-function)
-(global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-(global-set-key (kbd "<f1> l") 'counsel-find-library)
 (global-set-key (kbd "C-x l") 'counsel-locate)
 (global-set-key (kbd "C-c i") 'counsel-semantic-or-imenu)
 
-(custom-set-default 'counsel-describe-function-function 'helpful-function)
-(custom-set-default 'counsel-describe-variable-function 'helpful-variable)
 (global-set-key (kbd "C-h f") #'helpful-callable)
 (global-set-key (kbd "C-h v") #'helpful-variable)
 (global-set-key (kbd "C-h k") #'helpful-key)
 (global-set-key (kbd "C-h F") #'helpful-function)
 (global-set-key (kbd "C-h C") #'helpful-command)
+(global-set-key (kbd "C-h l") #'counsel-find-library)
 
 (require 'wgrep)
 
