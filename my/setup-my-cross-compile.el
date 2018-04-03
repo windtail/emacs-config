@@ -27,36 +27,19 @@
 
 (defun cross-compile-gdb ()
   (interactive)
-  (call-interactively 'gdb (concat "gdb-multiarch" " -i=mi ")))
+  (gdb (concat "gdb-multiarch" " -i=mi ")))
 
 ;; reset on load first time
 (cross-compile-reset)
 
 (defun cross-compile--add-include-relatively (base-directory relative-directory)
   (let ((include-directory (concat (file-name-as-directory base-directory) relative-directory)))
-	(semantic-add-system-include 'c-mode)
-	(semantic-add-system-include 'c++-mode)))
+	(semantic-add-system-include include-directory 'c-mode)
+	(semantic-add-system-include include-directory 'c++-mode)))
 
 (defun cross-compile--clear-includes ()
   (semantic-reset-system-include 'c-mode)
   (semantic-reset-system-include 'c++-mode))
-
-(defun my-projectile-setup-arm-embedded (project-root &optional build-root project-incs build-incs)
-  "setup arm embedded c project
-
-incs are all relative to project-root or build-root"
-  (let* ((build-root (or build-root project-root))
-		 (triplet "arm-linux-gnueabihf-")
-		 (arch "arm")
-		 (p-incs (append (list "include" (format "arch/%s/include" arch)) project-incs))
-		 (b-incs (append (list "include" "include/generated") build-incs)))
-    (cross-compile-save)
-    (my-setup-cross-compile triplet arch)
-	(my-projectile-cscope-set-initial-directory build-root)
-	(semantic-reset-system-include 'c-mode)
-    (dolist (inc p-incs) (my-semantic-try-add-system-include project-root inc))
-    (dolist (inc b-incs) (my-semantic-try-add-system-include build-root inc))
-    (my-semantic-gcc-setup triplet)))
 
 (defun cross-compile-setup-baremetal-project (project-directory &optional build-directory
 																project-relative-include-directories
@@ -64,7 +47,7 @@ incs are all relative to project-root or build-root"
   (let ((build-directory (or build-directory project-directory)))
 	(cscope-set-initial-directory build-directory)
 	(cross-compile--clear-includes)
-	(semantic-add-system-include (concat cross-compile-sysroot "/usr/include") 'c-mode)
+	(semantic-add-system-include (f-join cross-compile-sysroot "usr/include") 'c-mode)
 	(dolist (inc project-relative-include-directories)
 	  (cross-compile--add-include-relatively project-directory inc))
 	(dolist (inc build-relative-include-directories)

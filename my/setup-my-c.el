@@ -88,8 +88,7 @@
   (add-to-list (make-local-variable 'company-backends) 'company-c-headers)
   (define-key c-mode-map (kbd "<f1> d") 'man)
   (define-key c-mode-map (kbd "<f5> g") 'gdb)
-  (irony-mode)
-  (cppcm-reload-all))
+  (irony-mode))
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
 (add-hook 'c++-mode-hook 'my-on-c-mode)
