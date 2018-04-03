@@ -1,7 +1,8 @@
 
 (require 'setup-my-auto-install)
 
-(auto-install '(counsel-gtags xcscope company-c-headers dts-mode cmake-mode cpputils-cmake))
+(auto-install '(counsel-gtags xcscope company-c-headers dts-mode
+                              cmake-mode cpputils-cmake irony))
 (auto-download-contrib "https://raw.githubusercontent.com/y2q-actionman/Kconfig-Mode/master/kconfig-mode.el" "kconfig-mode.el")
 
 (require 'setup-my-prog-common)
@@ -87,9 +88,12 @@
   (add-to-list (make-local-variable 'company-backends) 'company-c-headers)
   (define-key c-mode-map (kbd "<f1> d") 'man)
   (define-key c-mode-map (kbd "<f5> g") 'gdb)
+  (irony-mode)
   (cppcm-reload-all))
 
 (add-hook 'c-mode-hook 'my-on-c-mode)
 (add-hook 'c++-mode-hook 'my-on-c-mode)
+
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 (provide 'setup-my-c)
