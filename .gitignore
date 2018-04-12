@@ -15,3 +15,6 @@ projectile.cache
 session.*
 /tramp
 contrib/
+url/
+srecode-map.el
+bookmarks
