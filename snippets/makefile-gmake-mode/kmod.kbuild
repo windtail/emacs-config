@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Kernel module Kbuild
+# key: kmodk
+# --
+
+obj-m := ${1:hello}.o
+
+$1-y := $0$1_a.o $1_b.o
