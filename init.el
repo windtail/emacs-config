@@ -621,6 +621,14 @@ is ('source dir' . 'build-dir')."
   :ensure t
   :defer t)
 
+(use-package hy-mode
+  :ensure t
+  :mode "\\.hy\\'")
+
+(use-package ob-hy
+  :ensure t
+  :defer t)
+
 (use-package org
   :ensure t
   :mode "\\.org\\'"
