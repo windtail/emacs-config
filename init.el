@@ -175,6 +175,13 @@
                     company-async-timeout 5) ; company-clang very slow on windows
     (setq-default company-idle-delay 0))
   (setq-default company-minimum-prefix-length 2)
+  ;; remove unused backend
+  (setq company-backends (delq #'company-bbdb company-backends))
+  (setq company-backends (delq #'company-nxml company-backends))
+  (setq company-backends (delq #'company-css company-backends))
+  (setq company-backends (delq #'company-eclim company-backends))
+  (setq company-backends (delq #'company-xcode company-backends))
+  (setq company-backends (delq #'company-oddmuse company-backends))
   :hook (prog-mode . global-company-mode))
 
 (use-package helpful
