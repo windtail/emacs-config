@@ -691,7 +691,7 @@ is ('source dir' . 'build-dir')."
 ;; CMakefileLists.txt
 (use-package cmake-mode
   :ensure t
-  :mode "/CMakeFileLists\\.txt\\'"
+  :mode "/CMakeFileLists\\.txt\\'\\|\\.cmake\\'"
   :bind (:map cmake-mode-map
               ("<f1> d" . cmake-help)
               ("C-c C-d" . cmake-help)))
