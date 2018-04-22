@@ -113,6 +113,18 @@
   :defer 2
   :config (global-hl-line-mode))
 
+(use-package f
+  :ensure t
+  :defer t)
+
+(use-package s
+  :ensure t
+  :defer t)
+
+(use-package dash
+  :ensure t
+  :defer t)
+
 (use-package hl-todo
   :ensure t
   :defer 2
