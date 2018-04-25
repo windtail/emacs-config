@@ -511,10 +511,8 @@ is ('source dir' . 'build-dir')."
 
 (use-package vlf
   :ensure t
-  :defer t)
-
-(use-package vlf-setup
-  :commands (vlf))
+  :defer 2
+  :config (require 'vlf-setup))
 
 ;; programming
 (use-package rainbow-delimiters
