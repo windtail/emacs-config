@@ -644,6 +644,10 @@ is ('source dir' . 'build-dir')."
   :ensure t
   :mode "\\.hy\\'")
 
+(use-package yaml-mode
+  :ensure t
+  :mode "\\.yml\\'")
+
 (use-package ob-hy
   :ensure t
   :defer t)
