@@ -629,8 +629,10 @@ is ('source dir' . 'build-dir')."
   (elpy-enable)
   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
   (elpy-set-test-runner 'elpy-test-pytest-runner)
-  (setq-default python-shell-interpreter "jupyter-console"
-                python-shell-interpreter-args "--simple-prompt"))
+  (setq-default python-shell-interpreter "jupyter"
+                python-shell-interpreter-args "console --simple-prompt"
+                python-shell-prompt-detect-failure-warning nil)
+  (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter"))
 
 (use-package py-autopep8
   :ensure t
