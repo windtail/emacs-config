@@ -650,7 +650,7 @@ is ('source dir' . 'build-dir')."
 
 (use-package org
   :ensure t
-  :mode "\\.org\\'"
+  :mode ("\\.org\\'" . org-mode)
   :config
   (setq org-src-fontify-natively t)
   (org-babel-do-load-languages
