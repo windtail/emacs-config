@@ -1,7 +1,6 @@
 *~
 *.elc
-##*##
-#*#
+\#*#
 elpa/
 backups/
 auto-save-list/
