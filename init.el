@@ -636,6 +636,10 @@ is ('source dir' . 'build-dir')."
   :ensure t
   :hook (elpy-mode . py-autopep8-enable-on-save))
 
+(use-package sphinx-doc
+  :ensure t
+  :hook (python-mode . sphinx-doc-mode))
+
 (use-package live-py-mode
   :ensure t
   :defer t)
