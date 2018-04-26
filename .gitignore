@@ -17,3 +17,4 @@ contrib/
 url/
 srecode-map.el
 bookmarks
+my-package-archives.el

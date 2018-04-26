@@ -1,0 +1,2 @@
+(setq package-archives '(("gnu" . "http://192.168.7.10/elpa/gnu/")
+                         ("melpa" . "http://192.168.7.10/elpa/melpa/")))

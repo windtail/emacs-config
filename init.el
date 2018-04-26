@@ -7,7 +7,7 @@
       initial-major-mode 'fundamental-mode) ; disable lisp-mode for *scatch*
 
 ;; load custome package archives or china mirror
-(unless (load (concat user-emacs-directory "my-package-archives") t t t)
+(unless (load (concat user-emacs-directory "my-package-archives.el") t t t)
   (setq package-archives '(("gnu" . "http://elpa.emacs-china.org/gnu/")
                            ("melpa" . "http://elpa.emacs-china.org/melpa/"))))
 
