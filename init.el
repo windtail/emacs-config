@@ -697,7 +697,7 @@ is ('source dir' . 'build-dir')."
   :mode "/Kconfig\\'")
 
 ;; Makefile.host Makefile.include Kbuild Kbuild.include
-(add-to-list 'auto-mode-alist '("/Kbuild\\'\\|Kbuild\\.\\|[Mm]akefile\\." . makefile-gmake-mode))
+(add-to-list 'auto-mode-alist '("/Kbuild\\'\\|/Kbuild\\.\\|/[Mm]akefile\\." . makefile-gmake-mode))
 
 ;; CMakefileLists.txt
 (use-package cmake-mode
