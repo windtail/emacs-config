@@ -831,6 +831,14 @@ is ('source dir' . 'build-dir')."
 (add-hook 'c-mode-common-hook #'my/set-cc-style)
 (add-hook 'c-mode-common-hook #'my/set-cc-key)
 
+(use-package dockerfile-mode
+  :ensure t
+  :mode "/Dockerfile\\'")
+
+(use-package docker-tramp
+  :ensure t
+  :after tramp)
+
 (message "Emacs init time %s" (emacs-init-time))
 
 (custom-set-variables
