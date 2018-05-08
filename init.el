@@ -16,10 +16,12 @@
 
 (package-initialize)
 
-(menu-bar-mode 0)
-(tool-bar-mode 0)
-(scroll-bar-mode 0)
-(horizontal-scroll-bar-mode 0)
+;; Avoid errors of emacs-nox
+(when (display-graphic-p)
+  (menu-bar-mode 0)
+  (tool-bar-mode 0)
+  (scroll-bar-mode 0)
+  (horizontal-scroll-bar-mode 0))
 
 (setq auto-window-vscroll nil
       message-log-max 16384
