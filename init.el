@@ -632,6 +632,10 @@ is ('source dir' . 'build-dir')."
                 python-shell-prompt-detect-failure-warning nil)
   (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter"))
 
+(use-package pipenv
+  :ensure t
+  :hook (python-mode . pipenv-mode))
+
 (use-package py-autopep8
   :ensure t
   :hook (elpy-mode . py-autopep8-enable-on-save))
