@@ -184,6 +184,7 @@
   (setq company-backends (delq #'company-eclim company-backends))
   (setq company-backends (delq #'company-xcode company-backends))
   (setq company-backends (delq #'company-oddmuse company-backends))
+  (setq company-dabbrev-downcase nil)
   :hook (prog-mode . global-company-mode))
 
 (use-package helpful
