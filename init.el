@@ -645,6 +645,7 @@ is ('source dir' . 'build-dir')."
 ;; python
 (use-package elpy
   :ensure t
+  :diminish elpy-mode
   :after (python)
   :config
   (elpy-enable)
@@ -657,7 +658,19 @@ is ('source dir' . 'build-dir')."
 
 (use-package pipenv
   :ensure t
-  :hook (python-mode . pipenv-mode))
+  :init (setenv "WORKON_HOME" "~/.virtualenvs")
+  :diminish pipenv-mode
+  :hook (python-mode . pipenv-mode)
+  :mode ("/Pipfile\\'" . conf-mode)
+  :config
+  (defun pipenv-install-elpy ()
+    (interactive)
+    (pipenv-install "--dev jedi rope autopep8 yapf flake8 jupyter")))
+
+(use-package json-mode
+  :ensure t
+  :mode (("\\.json\\'" . json-mode)
+         ("/Pipfile.lock\\'" . json-mode)))
 
 (use-package py-autopep8
   :ensure t
@@ -665,6 +678,7 @@ is ('source dir' . 'build-dir')."
 
 (use-package sphinx-doc
   :ensure t
+  :diminish sphinx-doc-mode
   :hook (python-mode . sphinx-doc-mode))
 
 (use-package live-py-mode

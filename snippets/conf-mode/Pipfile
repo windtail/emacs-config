@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: Pipfile-init
+# key: ppf
+# --
+
+[[source]]
+url = "${1:http://mirrors.aliyun.com/pypi/simple}"
+verify_ssl = ${2:false}
+name = "pypi"
+
+[dev-packages]
+jedi = "*"
+rope = "*"
+"autopep8" = "*"
+yapf = "*"
+"flake8" = "*"
+jupyter = "*"
+
+[packages]
+
+[requires]
+python_version = "${3:3.5}$0"
