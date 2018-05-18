@@ -525,7 +525,8 @@ is ('source dir' . 'build-dir')."
 (use-package smartparens
   :ensure t
   :diminish smartparens-mode
-  :hook (prog-mode . smartparens-mode)
+  :hook ((prog-mode . smartparens-mode)
+         (yaml-mode . smartparens-mode))
   :bind (("M-p" . 'sp-forward-parallel-sexp)
          ("C-M-p" . 'sp-backward-parallel-sexp)))
 
@@ -566,12 +567,31 @@ is ('source dir' . 'build-dir')."
 
 (use-package highlight-indentation
   :ensure t
-  :commands (highlight-indentation-mode))
+  :commands (highlight-indentation-mode)
+  :hook (yaml-mode . highlight-indentation-mode)
+  :config
+  (set-face-background 'highlight-indentation-face "#e3e3d3")
+  (set-face-background 'highlight-indentation-current-column-face "#c3b3b3")
+  (defun aj-toggle-fold ()
+    "Toggle fold all lines larger than indentation on current line"
+    (interactive)
+    (let ((col 1))
+      (save-excursion
+        (back-to-indentation)
+        (setq col (+ 1 (current-column)))
+        (set-selective-display
+         (if selective-display nil (or col 1))))))
+  (global-set-key (kbd "C-`") #'aj-toggle-fold))
 
-(use-package hungry-delete
+(use-package smart-shift
   :ensure t
-  :diminish hungry-delete-mode
-  :hook (prog-mode . hungry-delete-mode))
+  :commands (smart-shift-mode)
+  :hook (yaml-mode . smart-shift-mode))
+
+  (use-package hungry-delete
+    :ensure t
+    :diminish hungry-delete-mode
+    :hook (prog-mode . hungry-delete-mode))
 
 (use-package tdd
   :ensure-contrib "https://raw.githubusercontent.com/jorgenschaefer/emacs-tdd/master/tdd.el"
