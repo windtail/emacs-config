@@ -907,6 +907,9 @@ is ('source dir' . 'build-dir')."
   :ensure t
   :after tramp)
 
+(use-package nginx-mode
+  :ensure t)
+
 (use-package go-mode
   :ensure t
   :init (load "go-mode-autoloads")
