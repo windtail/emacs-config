@@ -907,6 +907,20 @@ is ('source dir' . 'build-dir')."
   :ensure t
   :after tramp)
 
+(use-package go-mode
+  :ensure t
+  :init (load "go-mode-autoloads")
+  :hook (before-save . gofmt-before-save))
+
+(use-package go-eldoc
+  :ensure t
+  :hook (go-mode . go-eldoc-setup))
+
+(use-package company-go
+  :ensure t
+  :after (company go-mode)
+  :config (add-to-list 'company-backends 'company-go))
+
 (message "Emacs init time %s" (emacs-init-time))
 
 (custom-set-variables
