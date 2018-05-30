@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: openapi response
+# key: res
+# --
+
+description: "$1"
+content:
+    application/json:
+        schema:
+            $0

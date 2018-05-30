@@ -185,7 +185,8 @@
   (setq company-backends (delq #'company-xcode company-backends))
   (setq company-backends (delq #'company-oddmuse company-backends))
   (setq company-dabbrev-downcase nil)
-  :hook (prog-mode . global-company-mode))
+  :hook ((prog-mode . global-company-mode)
+         (yaml-mode . global-company-mode)))
 
 (use-package helpful
   :ensure t
@@ -271,6 +272,10 @@
   (projectile-register-project-type 'kernel '("Kbuild" "Kconfig" "kernel" "mm" "init"))
   (projectile-register-project-type 'u-boot '("Kbuild" "Kconfig" "include/u-boot"))
   (projectile-register-project-type 'kernel-module '(".kernel-module"))
+  (projectile-register-project-type 'openapi-yaml '("index.yaml")
+                                    :compile "openapi-bundle > openapi.yaml && openapi-spec-validator openapi.yaml")
+  (projectile-register-project-type 'openapi-json '("index.json")
+                                    :compile "openapi-bundle -y > openapi.yaml && openapi-spec-validator openapi.yaml")
   (require 'f)
   (require 's)
   (require 'dash)
@@ -691,7 +696,29 @@ is ('source dir' . 'build-dir')."
 
 (use-package yaml-mode
   :ensure t
-  :mode "\\.yml\\'")
+  :mode "\\.yml\\'"
+  :config
+  (defun swagger-ui--do-start (app-dir)
+    (let ((default-directory app-dir))
+      (async-shell-command "docker run --rm --name swagger-ui -p 8000:8080 -e SWAGGER_JSON=/app/openapi.yaml -v $PWD:/app swaggerapi/swagger-ui")
+      (browse-url-firefox "http://localhost:8000")))
+  (defun swagger-ui-start ()
+    (interactive)
+    (let ((ptype (projectile-project-type)))
+      (when (or (equal ptype 'openapi-yaml) (equal ptype 'openapi-json))
+        (swagger-ui--do-start (projectile-project-root)))))
+  (defun swagger-ui-stop ()
+    (interactive)
+    (shell-command "docker stop swagger-ui"))
+  (defun swagger-ui-restart ()
+    (interactive)
+    (swagger-ui-stop)
+    (swagger-ui-start))
+  (add-hook 'yaml-mode-hook #'(lambda ()
+                                (local-set-key (kbd "C-c C-p SPC") #'swagger-ui-start)
+                                (local-set-key (kbd "C-c C-p s") #'swagger-ui-start)
+                                (local-set-key (kbd "C-c C-p t") #'swagger-ui-stop)
+                                (local-set-key (kbd "C-c C-p r") #'swagger-ui-restart))))
 
 (use-package ob-hy
   :ensure t
