@@ -240,7 +240,8 @@
          ("C-x l" . counsel-locate)
          ("C-c i" . counsel-semantic-or-imenu)
          ("C-h l" . counsel-find-library)
-         ("<C-tab>" . counsel-company)))
+         ("<C-tab>" . counsel-company)
+         ("C-x r RET" . counsel-recentf)))
 
 (use-package wgrep
   :ensure t
