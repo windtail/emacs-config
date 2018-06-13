@@ -229,6 +229,9 @@
   :ensure t
   :bind ("C-s" . swiper))
 
+(use-package tramp
+  :defer 2)
+
 (use-package counsel
   :ensure t
   :bind (("M-x" . counsel-M-x)
