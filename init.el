@@ -928,6 +928,10 @@ is ('source dir' . 'build-dir')."
   :after (company go-mode)
   :config (add-to-list 'company-backends 'company-go))
 
+(use-package protobuf-mode
+  :ensure t
+  :mode "\\.proto\\'")
+
 (message "Emacs init time %s" (emacs-init-time))
 
 (custom-set-variables
