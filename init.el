@@ -932,6 +932,19 @@ is ('source dir' . 'build-dir')."
   :ensure t
   :mode "\\.proto\\'")
 
+(use-package rust-mode
+  :ensure t
+  :mode "\\.rs\\'"
+  :config (setq rust-format-on-save t)
+  :hook (flycheck-mode . flycheck-rust-setup))
+
+(use-package flycheck-rust
+  :ensure t)
+
+(use-package cargo
+  :ensure t
+  :hook (rust-mode . cargo-minor-mode))
+
 (message "Emacs init time %s" (emacs-init-time))
 
 (custom-set-variables
