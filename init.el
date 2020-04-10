@@ -945,6 +945,10 @@ is ('source dir' . 'build-dir')."
   :ensure t
   :hook (rust-mode . cargo-minor-mode))
 
+(use-package antlr-mode
+  :ensure t
+  :mode "\\.g4\\'")
+
 (message "Emacs init time %s" (emacs-init-time))
 
 (custom-set-variables
