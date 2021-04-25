@@ -203,6 +203,7 @@
   :diminish which-key-mode
   :config (which-key-mode))
 
+; ivy-immediate-done C-M-j
 (use-package ivy
   :ensure t
   :defer 2
